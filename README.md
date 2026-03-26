@@ -1,5 +1,6 @@
-# React + TypeScript + Vite
 # Lunch/Dinner Picker
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1eef1fdc-acfd-4150-9b78-956b4f309942/deploy-status)](https://app.netlify.com/projects/food-roulette-jp/deploys)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
