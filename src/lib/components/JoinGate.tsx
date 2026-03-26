@@ -15,7 +15,6 @@ interface JoinGateProps {
 /** Pre-join gate: shows invite code and a name input. */
 export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps) {
   const { t } = useLocale();
-  const router = useRouter();
   const [joinName, setJoinName] = useState("");
   const locked = !!group.join_locked;
 
