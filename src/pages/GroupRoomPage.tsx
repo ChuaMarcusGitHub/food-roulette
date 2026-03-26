@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useLocale } from "@/lib/i18n/context";
+import { t } from "@translate";
 import { getSupabase } from "@/lib/supabase/client";
 import { useGroupRoom } from "@/lib/hooks/useGroupRoom";
 import { useRoulette } from "@/lib/hooks/useRoulette";
@@ -18,7 +18,6 @@ import { ROUTES } from "@/constants";
 export default function GroupRoomPage() {
   const params = useParams();
   const groupId = params?.groupId as string | undefined;
-  const { t } = useLocale();
   const supabase = getSupabase();
 
   const room = useGroupRoom(groupId);
@@ -34,9 +33,9 @@ export default function GroupRoomPage() {
   if (!room.configured) {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.configureEnv")}</p>
+        <p className="text-slate-600 dark:text-slate-400">{t("group.configure_env")}</p>
         <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
-          {t("common.backHome")}
+          {t("common.back_home")}
         </Link>
       </main>
     );
@@ -45,9 +44,9 @@ export default function GroupRoomPage() {
   if (!groupId || typeof groupId !== "string") {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.missingGroup")}</p>
+        <p className="text-slate-600 dark:text-slate-400">{t("group.missing_group")}</p>
         <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
-          {t("common.backHome")}
+          {t("common.back_home")}
         </Link>
       </main>
     );
@@ -56,7 +55,7 @@ export default function GroupRoomPage() {
   if (!room.fetched) {
     return (
       <main className="mx-auto max-w-lg px-4 py-16 text-center text-slate-600 dark:text-slate-400">
-        {t("group.loadingRoom")}
+        {t("group.loading_room")}
       </main>
     );
   }
@@ -64,9 +63,9 @@ export default function GroupRoomPage() {
   if (!room.group) {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.notLoaded")}</p>
+        <p className="text-slate-600 dark:text-slate-400">{t("group.not_loaded")}</p>
         <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
-          {t("common.backHome")}
+          {t("common.back_home")}
         </Link>
       </main>
     );
@@ -143,7 +142,7 @@ export default function GroupRoomPage() {
       {room.tab === "settings" && (
         <section className="space-y-4">
           <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-            {room.isCreator ? t("group.settingsIntroCreator") : t("group.settingsIntroMember")}
+            {room.isCreator ? t("group.settings_intro_creator") : t("group.settings_intro_member")}
           </p>
           <div className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900/40">
             <MemberPasswordForm

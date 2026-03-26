@@ -1,5 +1,5 @@
 import type { Group, MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { t } from "@translate";
 
 interface MembersPanelProps {
   group: Group;
@@ -25,26 +25,25 @@ export default function MembersPanel({
   onClaimCreator,
   onDeleteGroup,
 }: MembersPanelProps) {
-  const { t } = useLocale();
 
   return (
     <section className="space-y-4">
       <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {t("group.membersTitleCount", { count: String(members.length) })}
+        {t("group.members_title_count", { count: String(members.length) })}
       </h2>
       <p className="text-sm text-slate-500 dark:text-slate-400">
-        {isCreator ? t("group.membersHelpCreator") : t("group.membersHelpOther")}
+        {isCreator ? t("group.members_help_creator") : t("group.members_help_other")}
       </p>
       {!group.creator_member_id ? (
         <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-3 dark:border-amber-900/60 dark:bg-amber-950/30">
-          <p className="text-xs text-amber-900 dark:text-amber-200">{t("group.noCreatorHint")}</p>
+          <p className="text-xs text-amber-900 dark:text-amber-200">{t("group.no_creator_hint")}</p>
           <button
             type="button"
             disabled={busy}
             onClick={() => void onClaimCreator()}
             className="mt-2 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-400 disabled:opacity-50"
           >
-            {t("group.claimCreator")}
+            {t("group.claim_creator")}
           </button>
         </div>
       ) : null}
@@ -60,7 +59,7 @@ export default function MembersPanel({
                 {isYou ? <span className="ml-2 text-xs text-slate-500 dark:text-slate-400">{t("group.you")}</span> : null}
                 {isGroupCreator ? (
                   <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
-                    {t("group.creatorBadge")}
+                    {t("group.creator_badge")}
                   </span>
                 ) : null}
               </div>
@@ -70,13 +69,13 @@ export default function MembersPanel({
                     <button
                       type="button"
                       disabled={busy}
-                      onClick={() => { if (window.confirm(t("group.confirmTransferCreator"))) void onTransferCreator(m.id); }}
+                      onClick={() => { if (window.confirm(t("group.confirm_transfer_creator"))) void onTransferCreator(m.id); }}
                       className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-900 hover:bg-amber-100 disabled:opacity-50 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-100"
                     >
-                      {t("group.transferCreator")}
+                      {t("group.transfer_creator")}
                     </button>
                   ) : null}
-                  <button type="button" disabled={busy} onClick={() => { if (window.confirm(t("group.confirmRemove"))) void onRemove(m.id); }}
+                  <button type="button" disabled={busy} onClick={() => { if (window.confirm(t("group.confirm_remove"))) void onRemove(m.id); }}
                     className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950">
                     {t("group.remove")}
                   </button>
@@ -88,17 +87,17 @@ export default function MembersPanel({
       </ul>
       {isCreator ? (
         <div className="rounded-xl border border-red-200 bg-red-50/60 p-4 dark:border-red-900/60 dark:bg-red-950/30">
-          <h3 className="text-sm font-semibold text-red-900 dark:text-red-200">{t("group.deleteGroupTitle")}</h3>
-          <p className="mt-1 text-xs text-red-800/90 dark:text-red-300/90">{t("group.deleteGroupHint")}</p>
+          <h3 className="text-sm font-semibold text-red-900 dark:text-red-200">{t("group.delete_group_title")}</h3>
+          <p className="mt-1 text-xs text-red-800/90 dark:text-red-300/90">{t("group.delete_group_hint")}</p>
           <button type="button" disabled={busy}
             onClick={() => {
-              if (!window.confirm(t("group.confirmDeleteGroup"))) return;
-              const typed = window.prompt(t("group.promptDelete"));
+              if (!window.confirm(t("group.confirm_delete_group"))) return;
+              const typed = window.prompt(t("group.prompt_delete"));
               if (typed !== "DELETE") return;
               void onDeleteGroup();
             }}
             className="mt-3 rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:opacity-50 dark:hover:bg-red-600">
-            {t("group.deleteGroupCta")}
+            {t("group.delete_group_cta")}
           </button>
         </div>
       ) : null}

@@ -8,7 +8,7 @@ import { fetchLocations, addLocation, deleteLocation } from "@/lib/supabase/loca
 import { normalizeLocationUrlForDedup } from "@/lib/utils/location-url";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
-import { useLocale } from "@/lib/i18n/context";
+import { t } from "@translate";
 import { useNotice } from "./useNotice";
 import { ROUTES } from "@/constants";
 
@@ -50,7 +50,6 @@ export interface UseGroupRoomReturn {
 /** All data, subscriptions, and actions for a group room. */
 export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
   const navigate = useNavigate();
-  const { t } = useLocale();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();
   const { notice, showNotice } = useNotice();
@@ -137,7 +136,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       .on("postgres_changes", { event: "UPDATE", schema: "public", table: "groups", filter: `id=eq.${groupId}` }, () => { loadGroup(); })
       .on("postgres_changes", { event: "DELETE", schema: "public", table: "groups", filter: `id=eq.${groupId}` }, () => {
         setStoredGroupId(null);
-        showNotice(t("group.groupDeleted"), true);
+        showNotice(t("group.group_deleted"), true);
         navigate(ROUTES.HOME, { replace: true });
       })
       .subscribe();
@@ -174,7 +173,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         // If this member row moved to another device, kick this tab out.
         if (nextDeviceId && thisDeviceId && nextDeviceId !== thisDeviceId) {
           setStoredGroupId(null);
-          showNotice(t("group.sessionMoved"), true);
+          showNotice(t("group.session_moved"), true);
           navigate(ROUTES.HOME, { replace: true });
         }
       })
@@ -199,33 +198,33 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
     setBusy(true);
     try {
       const deviceId = getDeviceId();
-      if (!deviceId) throw new Error(t("common.errDeviceId"));
+      if (!deviceId) throw new Error(t("common.err_device_id"));
       const { data, error } = await joinGroupById(supabase, groupId, name, deviceId);
       if (error) {
-        if (/room_locked/i.test(error)) showNotice(t("group.roomLocked"), true);
-        else if (/name_taken/i.test(error)) showNotice(t("group.errNameTaken"), true);
-        else if (/empty_name/i.test(error)) showNotice(t("home.errJoinName"), true);
+        if (/room_locked/i.test(error)) showNotice(t("group.room_locked"), true);
+        else if (/name_taken/i.test(error)) showNotice(t("group.err_name_taken"), true);
+        else if (/empty_name/i.test(error)) showNotice(t("home.err_join_name"), true);
         else showNotice(error, true);
         return;
       }
-      if (!data?.group_id) { showNotice(t("group.errJoin"), true); return; }
+      if (!data?.group_id) { showNotice(t("group.err_join"), true); return; }
       setStoredGroupId(groupId);
       await loadSelf();
       await reloadMembers();
       showNotice(t("group.welcome", { name }));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errJoin"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_join"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, t, showNotice, loadSelf, reloadMembers]);
 
   const handleAddPlace = useCallback(async (name: string, url: string) => {
     if (!supabase || !groupId || !member?.id) {
-      showNotice(t("group.joinHint"), true);
+      showNotice(t("group.join_hint"), true);
       return;
     }
     const normalized = normalizeLocationUrlForDedup(url);
     if (locations.some((loc) => normalizeLocationUrlForDedup(loc.url) === normalized)) {
-      showNotice(t("group.placeDuplicate"), true);
+      showNotice(t("group.place_duplicate"), true);
       return;
     }
 
@@ -240,7 +239,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         const ln = loc.name?.trim().toLowerCase().replace(/\s+/g, " ") ?? "";
         return ln && ln === normalizedName;
       })) {
-        showNotice(t("group.placeDuplicateName"), true);
+        showNotice(t("group.place_duplicate_name"), true);
         return;
       }
     }
@@ -250,10 +249,10 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const error = await addLocation(supabase, groupId, name, url, member.id);
       if (error) throw new Error(error);
       await reloadLocations();
-      showNotice(t("group.placeAdded"));
+      showNotice(t("group.place_added"));
       setTab("places");
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errAddPlace"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_add_place"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member?.id, locations, t, showNotice, reloadLocations, setTab]);
 
@@ -262,7 +261,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
     const loc = locations.find((l) => l.id === locationId);
     if (!loc) return;
     if (!isCreator) {
-      showNotice(t("group.errRemovePlaceForbidden"), true);
+      showNotice(t("group.err_remove_place_forbidden"), true);
       return;
     }
     setBusy(true);
@@ -270,15 +269,15 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const error = await deleteLocation(supabase, locationId);
       if (error) {
         if (error === "no_rows_deleted") {
-          throw new Error(t("group.errRemovePlacePolicy"));
+          throw new Error(t("group.err_remove_place_policy"));
         }
         throw new Error(error);
       }
       setLocations((prev) => prev.filter((l) => l.id !== locationId));
       await reloadLocations();
-      showNotice(t("group.placeRemoved"));
+      showNotice(t("group.place_removed"));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errRemovePlace"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_remove_place"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member, locations, isCreator, t, showNotice, reloadLocations]);
 
@@ -292,7 +291,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         setGroup(g => g ? { ...g, invite_code: data.invite_code! } : g);
         setInviteDraft(data.invite_code);
       }
-      showNotice(t("group.inviteUpdated"));
+      showNotice(t("group.invite_updated"));
     } catch (err: unknown) {
       showNotice(err instanceof Error ? err.message : t("group.errInviteUpdate"), true);
     } finally { setBusy(false); }
@@ -309,7 +308,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         setGroup(g => g ? { ...g, invite_code: data.invite_code! } : g);
         setInviteDraft(data.invite_code);
       }
-      showNotice(`${t("group.newInvite")} ${data?.invite_code ?? code}`);
+      showNotice(`${t("group.new_invite")} ${data?.invite_code ?? code}`);
     } catch (err: unknown) {
       showNotice(err instanceof Error ? err.message : t("group.errRandomizeCode"), true);
     } finally { setBusy(false); }
@@ -322,7 +321,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const error = await removeMember(supabase, groupId, member.id, targetId);
       if (error) throw new Error(error);
       await reloadMembers();
-      showNotice(t("group.memberRemoved"));
+      showNotice(t("group.member_removed"));
     } catch (err: unknown) {
       showNotice(err instanceof Error ? err.message : t("group.errRemoveMember"), true);
     } finally { setBusy(false); }
@@ -335,10 +334,10 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const error = await deleteGroup(supabase, groupId, member.id);
       if (error) throw new Error(error);
       setStoredGroupId(null);
-      showNotice(t("group.groupDeletedLocal"));
+      showNotice(t("group.group_deleted_local"));
       navigate(ROUTES.HOME, { replace: true });
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errDelete"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_delete"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member, t, showNotice, navigate]);
 
@@ -351,9 +350,9 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const nextCreatorId = data?.creator_member_id ?? targetId;
       setGroup(g => g ? { ...g, creator_member_id: nextCreatorId } : g);
       await reloadMembers();
-      showNotice(t("group.creatorTransferred"));
+      showNotice(t("group.creator_transferred"));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errTransferCreator"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_transfer_creator"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member?.id, isCreator, t, showNotice, reloadMembers]);
 
@@ -365,9 +364,9 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       if (error) throw new Error(error);
       const nextCreatorId = data?.creator_member_id ?? member.id;
       setGroup(g => g ? { ...g, creator_member_id: nextCreatorId } : g);
-      showNotice(t("group.creatorClaimed"));
+      showNotice(t("group.creator_claimed"));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errClaimCreator"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_claim_creator"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member?.id, t, showNotice]);
 
@@ -395,13 +394,13 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
     setBusy(true);
     try {
       const deviceId = getDeviceId();
-      if (!deviceId) throw new Error(t("common.errDeviceId"));
+      if (!deviceId) throw new Error(t("common.err_device_id"));
       const error = await setMemberPassword(supabase, groupId, deviceId, pw);
       if (error) throw new Error(error);
       await loadSelf();
-      showNotice(t("group.memberPasswordUpdated"));
+      showNotice(t("group.member_password_updated"));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : t("group.errSaveMemberPassword"), true);
+      showNotice(err instanceof Error ? err.message : t("group.err_save_member_password"), true);
     } finally { setBusy(false); }
   }, [supabase, groupId, member?.id, t, showNotice, loadSelf]);
 
@@ -413,7 +412,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       const { data, error } = await setJoinLocked(supabase, groupId, member.id, next);
       if (error) throw new Error(error);
       setGroup(g => g ? { ...g, join_locked: data?.join_locked ?? next } : g);
-      showNotice(t("group.joinLockedUpdated"));
+      showNotice(t("group.join_locked_updated"));
     } catch (err: unknown) {
       showNotice(err instanceof Error ? err.message : "Error", true);
     } finally { setBusy(false); }
