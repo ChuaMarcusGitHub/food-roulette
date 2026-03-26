@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { recoverMemberSession } from "@/lib/supabase/recovery";
 import { useNotice } from "@/lib/hooks/useNotice";
@@ -10,7 +10,6 @@ import { ROUTES, INVITE_CODE_LENGTH } from "@/constants";
 
 export default function RecoverPage() {
   const navigate = useNavigate();
-  const { t } = useLocale();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();
   const { notice, showNotice } = useNotice();
@@ -26,11 +25,11 @@ export default function RecoverPage() {
     const code = mInvite.trim().toUpperCase();
     const name = mName.trim();
     const pw = mPassword.trim();
-    if (code.length !== INVITE_CODE_LENGTH) { showNotice(t("recover.errInvite"), true); return; }
-    if (!name) { showNotice(t("recover.errMemberName"), true); return; }
-    if (!pw) { showNotice(t("recover.errMemberPassword"), true); return; }
+    if (code.length !== INVITE_CODE_LENGTH) { showNotice(t("recover.err_invite"), true); return; }
+    if (!name) { showNotice(t("recover.err_member_name"), true); return; }
+    if (!pw) { showNotice(t("recover.err_member_password"), true); return; }
     const deviceId = getDeviceId();
-    if (!deviceId) { showNotice(t("common.errDeviceId"), true); return; }
+    if (!deviceId) { showNotice(t("common.err_device_id"), true); return; }
     setBusy(true);
     try {
       const { groupId, error } = await recoverMemberSession(supabase, code, name, pw, deviceId);
@@ -47,9 +46,9 @@ export default function RecoverPage() {
   if (!configured) {
     return (
       <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.configureEnv")}</p>
+        <p className="text-slate-600 dark:text-slate-400">{t("group.configure_env")}</p>
         <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-600 dark:text-teal-400">
-          {t("common.backHome")}
+          {t("common.back_home")}
         </Link>
       </main>
     );
@@ -67,21 +66,21 @@ export default function RecoverPage() {
       <Notice notice={notice} className="mb-6" />
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.memberSection")}</h2>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{t("recover.memberSubtitle")}</p>
+        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.member_section")}</h2>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{t("recover.member_subtitle")}</p>
         <form onSubmit={handleMemberSubmit} className="mt-4 flex flex-col gap-3">
-          <label className="block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.invitePh")}</label>
+          <label className="block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.invite_ph")}</label>
           <input type="text" value={mInvite} onChange={(e) => setMInvite(e.target.value.toUpperCase())} maxLength={INVITE_CODE_LENGTH}
             className="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono tracking-widest dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.namePh")}</label>
+          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.name_ph")}</label>
           <input type="text" value={mName} onChange={(e) => setMName(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.memberPasswordPh")}</label>
+          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("recover.member_password_ph")}</label>
           <input type="password" autoComplete="new-password" value={mPassword} onChange={(e) => setMPassword(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
           <button type="submit" disabled={busy}
             className="mt-2 w-full rounded-lg border border-slate-200 bg-slate-900 py-2.5 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:border-slate-600 dark:bg-teal-800 dark:hover:bg-teal-700">
-            {t("recover.memberCta")}
+            {t("recover.member_cta")}
           </button>
         </form>
       </section>

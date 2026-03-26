@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import type { Group, Notice as NoticeType } from "@/types";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 import Notice from "@/lib/components/Notice";
 import { ROUTES } from "@/constants";
 
@@ -14,7 +14,6 @@ interface JoinGateProps {
 
 /** Pre-join gate: shows invite code and a name input. */
 export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps) {
-  const { t } = useLocale();
   const [joinName, setJoinName] = useState("");
   const locked = !!group.join_locked;
 
@@ -29,20 +28,20 @@ export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps)
     <main className="mx-auto max-w-lg px-4 py-10 pb-16 dark:text-slate-200">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <Link to={ROUTES.HOME} className="text-sm text-slate-500 underline decoration-slate-300 underline-offset-2 dark:text-slate-400 dark:decoration-slate-600">
-          {t("common.backHome")}
+          {t("common.back_home")}
         </Link>
         <Link to={ROUTES.RECOVER} className="text-sm text-teal-700 underline decoration-teal-300 underline-offset-2 dark:text-teal-400">
-          {t("home.recoverLink")}
+          {t("home.recover_link")}
         </Link>
       </div>
 
       <header className="mt-6 border-b border-slate-200 pb-6 dark:border-slate-700">
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          {t("group.joinGateTitle", { name: group.name ?? "" })}
+          {t("group.join_gate_title", { name: group.name ?? "" })}
         </h1>
         {group.invite_code ? (
           <p className="mt-2 font-mono text-sm text-slate-600 dark:text-slate-400">
-            {t("group.joinCode")}{" "}
+            {t("group.join_code")}{" "}
             <span className="font-semibold text-teal-800 dark:text-teal-400">{group.invite_code}</span>
           </p>
         ) : null}
@@ -50,7 +49,7 @@ export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps)
 
       {locked ? (
         <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-100">
-          {t("group.roomLockedHint")}
+          {t("group.room_locked_hint")}
         </div>
       ) : null}
 
@@ -58,16 +57,16 @@ export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps)
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {t("group.joinYourName")}
+          {t("group.join_your_name")}
         </h2>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("group.joinHint")}</p>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("group.join_hint")}</p>
         <p className="mt-2 rounded-lg bg-slate-50 px-2 py-1.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-          {t("group.joinTip")}
+          {t("group.join_tip")}
         </p>
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3">
           <input
             type="text"
-            placeholder={t("group.joinPlaceholder")}
+            placeholder={t("group.join_placeholder")}
             value={joinName}
             onChange={(e) => setJoinName(e.target.value)}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
@@ -78,7 +77,7 @@ export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps)
             disabled={busy}
             className="rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50 dark:hover:bg-teal-500"
           >
-            {t("group.enterRoom")}
+            {t("group.enter_room")}
           </button>
         </form>
       </section>

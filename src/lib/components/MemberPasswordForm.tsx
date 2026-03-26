@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
 
 interface MemberPasswordFormProps {
@@ -20,7 +20,6 @@ export default function MemberPasswordForm({
   showNotice,
   embedded = false,
 }: MemberPasswordFormProps) {
-  const { t } = useLocale();
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [editing, setEditing] = useState(false);
@@ -32,11 +31,11 @@ export default function MemberPasswordForm({
     const a = pw.trim();
     const b = pw2.trim();
     if (a.length < MIN_PASSWORD_LENGTH) {
-      showNotice(t("group.errMemberPasswordShort"), true);
+      showNotice(t("group.err_member_password_short"), true);
       return;
     }
     if (a !== b) {
-      showNotice(t("group.memberPasswordMismatch"), true);
+      showNotice(t("group.member_password_mismatch"), true);
       return;
     }
     void onSave(a).then(() => {
@@ -69,10 +68,10 @@ export default function MemberPasswordForm({
             </span>
             <div>
               <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
-                {t("group.memberPasswordSavedShort")}
+                {t("group.member_password_saved_short")}
               </p>
               <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                {t("group.memberPasswordRememberStored")}
+                {t("group.member_password_remember_stored")}
               </p>
             </div>
           </div>
@@ -81,7 +80,7 @@ export default function MemberPasswordForm({
             onClick={() => setEditing(true)}
             className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
           >
-            {t("group.memberPasswordChangeCta")}
+            {t("group.member_password_change_cta")}
           </button>
         </div>
       </div>
@@ -91,14 +90,14 @@ export default function MemberPasswordForm({
   return (
     <div className={shell}>
       <h2 className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {hasPassword ? t("group.memberPasswordChangeTitle") : t("group.memberPasswordTitle")}
+        {hasPassword ? t("group.member_password_change_title") : t("group.member_password_title")}
       </h2>
       <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-        {hasPassword ? t("group.memberPasswordChangeHint") : t("group.memberPasswordHint")}
+        {hasPassword ? t("group.member_password_change_hint") : t("group.member_password_hint")}
       </p>
       {!hasPassword ? (
         <p className="mt-2 rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
-          {t("group.memberPasswordRememberWarn")}
+          {t("group.member_password_remember_warn")}
         </p>
       ) : null}
 
@@ -106,7 +105,7 @@ export default function MemberPasswordForm({
         <input
           type="password"
           autoComplete="new-password"
-          placeholder={t("group.memberPasswordPlaceholder")}
+          placeholder={t("group.member_password_placeholder")}
           value={pw}
           onChange={(e) => setPw(e.target.value)}
           className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
@@ -115,7 +114,7 @@ export default function MemberPasswordForm({
         <input
           type="password"
           autoComplete="new-password"
-          placeholder={t("group.memberPasswordConfirm")}
+          placeholder={t("group.member_password_confirm")}
           value={pw2}
           onChange={(e) => setPw2(e.target.value)}
           className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
@@ -127,7 +126,7 @@ export default function MemberPasswordForm({
             disabled={busy}
             className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-teal-800 dark:hover:bg-teal-700"
           >
-            {hasPassword ? t("group.memberPasswordUpdateSave") : t("group.memberPasswordSave")}
+            {hasPassword ? t("group.member_password_update_save") : t("group.member_password_save")}
           </button>
           {hasPassword && editing ? (
             <button
@@ -136,7 +135,7 @@ export default function MemberPasswordForm({
               onClick={handleCancel}
               className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
             >
-              {t("group.memberPasswordCancel")}
+              {t("group.member_password_cancel")}
             </button>
           ) : null}
         </div>

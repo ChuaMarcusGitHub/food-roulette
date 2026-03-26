@@ -1,5 +1,5 @@
 import type { Location } from "@/types";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 import MapPreview from "@/lib/components/MapPreview";
 import { useMemo, useState } from "react";
 
@@ -29,7 +29,6 @@ export default function PlacesList({
   busy,
   onRemovePlace,
 }: PlacesListProps) {
-  const { t } = useLocale();
   const [query, setQuery] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const PAGE_SIZE = 8;
@@ -54,7 +53,7 @@ export default function PlacesList({
   return (
     <section className="space-y-4">
       <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {t("group.placesTitleCount", { count: String(locations.length) })}
+        {t("group.places_title_count", { count: String(locations.length) })}
       </h2>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -78,7 +77,7 @@ export default function PlacesList({
 
       {locations.length === 0 ? (
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          {t("group.placesEmptyTab", { tabName: t("group.tabs.add") })}
+          {t("group.places_empty_tab", { tabName: t("group.tabs.add") })}
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
@@ -86,7 +85,7 @@ export default function PlacesList({
             {shown.map((loc) => {
               const addedBy = loc.added_by_member_id ? memberNameById[loc.added_by_member_id] ?? t("common.someone") : t("common.someone");
               const isExpanded = expandedId === loc.id;
-              const label = loc.name?.trim() || t("roulette.placeFallback");
+              const label = loc.name?.trim() || t("roulette.place_fallback");
               const domain = getDomainLabel(loc.url);
               return (
                 <li key={loc.id} className="px-4 py-3">
@@ -100,7 +99,7 @@ export default function PlacesList({
                       <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                         <span className="truncate">{domain}</span>
                         <span aria-hidden className="text-slate-300 dark:text-slate-600">·</span>
-                        <span className="truncate">{t("group.addBy")} {addedBy}</span>
+                        <span className="truncate">{t("group.add_by")} {addedBy}</span>
                       </p>
                     </button>
 
@@ -127,12 +126,12 @@ export default function PlacesList({
                           type="button"
                           disabled={busy}
                           onClick={() => {
-                            if (!window.confirm(t("group.confirmRemovePlace"))) return;
+                            if (!window.confirm(t("group.confirm_remove_place"))) return;
                             void onRemovePlace(loc.id);
                           }}
                           className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950"
                         >
-                          {t("group.removePlace")}
+                          {t("group.remove_place")}
                         </button>
                       ) : null}
                     </div>

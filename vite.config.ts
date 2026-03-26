@@ -15,6 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      '@translate': path.resolve(__dirname, 'src/lib/i18n/translate.ts'),
     },
   },
 })

@@ -13,12 +13,15 @@ const languageMap: LocaleMap = {
   en: en,
   jp: jp,
 };
+const VALID_LOCALES = Object.keys(languageMap);
+
 /** Wraps the app in theme + locale providers. */
 export default function Providers({ children }: ProvidersProps) {
-  const browserLanguage: Locale = useMemo(
-    () => get(BROWSER_LANGUAGE_KEY) ?? "en",
-    [],
-  );
+  const browserLanguage: Locale = useMemo(() => {
+    const stored = get<Locale>(BROWSER_LANGUAGE_KEY);
+    return stored && VALID_LOCALES.includes(stored) ? stored : "en";
+  }, []);
+  
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <LocaleProvider browserLanguage={browserLanguage} texts={languageMap}>

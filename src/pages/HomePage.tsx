@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { getDeviceId, getStoredGroupId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { createGroup, setGroupCreator } from "@/lib/supabase/groups";
 import { joinGroupByCode, setMemberPassword } from "@/lib/supabase/members";
@@ -12,7 +12,6 @@ import { ROUTES, MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { t } = useLocale();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();
   const { notice, showNotice } = useNotice();
@@ -52,9 +51,9 @@ export default function HomePage() {
     const gName = newGroupName.trim();
     const you = creatorName.trim();
     const pw = memberPassword.trim();
-    if (!gName) { showNotice(t("home.errGroupName"), true); return; }
-    if (!you) { showNotice(t("home.errYourName"), true); return; }
-    if (pw.length < MIN_PASSWORD_LENGTH) { showNotice(t("home.errRecovery"), true); return; }
+    if (!gName) { showNotice(t("home.err_group_name"), true); return; }
+    if (!you) { showNotice(t("home.err_your_name"), true); return; }
+    if (pw.length < MIN_PASSWORD_LENGTH) { showNotice(t("home.err_recovery"), true); return; }
     setBusy(true);
     try {
       const inviteCode = await generateUniqueInviteCode(supabase);
@@ -62,7 +61,7 @@ export default function HomePage() {
       if (gErr || !group) throw new Error(gErr ?? "Could not create group");
 
       const deviceId = getDeviceId();
-      if (!deviceId) throw new Error(t("common.errDeviceId"));
+      if (!deviceId) throw new Error(t("common.err_device_id"));
 
       const { data: memRow, error: mErr } = await supabase
         .from("group_members")
@@ -89,23 +88,23 @@ export default function HomePage() {
     if (!supabase) return;
     const code = joinCode.trim().toUpperCase();
     const you = joinName.trim();
-    if (code.length !== INVITE_CODE_LENGTH) { showNotice(t("home.errInviteLen"), true); return; }
-    if (!you) { showNotice(t("home.errJoinName"), true); return; }
+    if (code.length !== INVITE_CODE_LENGTH) { showNotice(t("home.err_invite_len"), true); return; }
+    if (!you) { showNotice(t("home.err_join_name"), true); return; }
     setBusy(true);
     try {
       const deviceId = getDeviceId();
-      if (!deviceId) throw new Error(t("common.errDeviceId"));
+      if (!deviceId) throw new Error(t("common.err_device_id"));
       const { data, error } = await joinGroupByCode(supabase, code, you, deviceId);
       if (error) {
-        if (/room_locked/i.test(error)) showNotice(t("home.errRoomLocked"), true);
-        else if (/group_not_found|bad_invite/i.test(error)) showNotice(t("home.errNoGroup"), true);
-        else if (/name_taken/i.test(error)) showNotice(t("home.errNameTaken"), true);
-        else if (/empty_name/i.test(error)) showNotice(t("home.errJoinName"), true);
+        if (/room_locked/i.test(error)) showNotice(t("home.err_room_locked"), true);
+        else if (/group_not_found|bad_invite/i.test(error)) showNotice(t("home.err_no_group"), true);
+        else if (/name_taken/i.test(error)) showNotice(t("home.err_name_taken"), true);
+        else if (/empty_name/i.test(error)) showNotice(t("home.err_join_name"), true);
         else showNotice(error, true);
         return;
       }
       const gid = data?.group_id;
-      if (!gid) { showNotice(t("home.errNoGroup"), true); return; }
+      if (!gid) { showNotice(t("home.err_no_group"), true); return; }
       setStoredGroupId(gid);
       navigate(ROUTES.GROUP(gid));
     } catch (err: unknown) {
@@ -116,8 +115,8 @@ export default function HomePage() {
   if (!configured) {
     return (
       <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("common.appName")}</h1>
-        <p className="mt-3 text-slate-600 dark:text-slate-400">{t("home.errEnv")}</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{t("common.app_name")}</h1>
+        <p className="mt-3 text-slate-600 dark:text-slate-400">{t("home.err_env")}</p>
       </main>
     );
   }
@@ -125,49 +124,49 @@ export default function HomePage() {
   return (
     <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
       <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-700">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t("common.appName")}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{t("common.app_name")}</h1>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("home.tagline")}</p>
       </header>
 
       <Notice notice={notice} className="mb-6" />
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("home.createTitle")}</h2>
-        <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">{t("home.retentionWarning")}</p>
+        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("home.create_title")}</h2>
+        <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">{t("home.retention_warning")}</p>
         <form onSubmit={handleCreateGroup} className="mt-3 flex flex-col gap-3">
-          <input type="text" placeholder={t("home.groupNamePh")} value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)}
+          <input type="text" placeholder={t("home.group_name_ph")} value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <input type="text" placeholder={t("home.yourNamePh")} value={creatorName} onChange={(e) => setCreatorName(e.target.value)}
+          <input type="text" placeholder={t("home.your_name_ph")} value={creatorName} onChange={(e) => setCreatorName(e.target.value)}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <input type="password" autoComplete="new-password" placeholder={t("home.recoveryKeyPh")} value={memberPassword} onChange={(e) => setMemberPasswordState(e.target.value)}
+          <input type="password" autoComplete="new-password" placeholder={t("home.recovery_key_ph")} value={memberPassword} onChange={(e) => setMemberPasswordState(e.target.value)}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <p className="text-xs text-slate-600 dark:text-slate-400">{t("home.recoveryHint")}</p>
+          <p className="text-xs text-slate-600 dark:text-slate-400">{t("home.recovery_hint")}</p>
           <button type="submit" disabled={busy} className="rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 disabled:opacity-50">
-            {t("home.createCta")}
+            {t("home.create_cta")}
           </button>
         </form>
       </section>
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("home.joinTitle")}</h2>
+        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{t("home.join_title")}</h2>
         <form onSubmit={handleJoinGroup} className="mt-3 flex flex-col gap-3">
-          <input type="text" placeholder={t("home.joinNamePh")} value={joinName} onChange={(e) => setJoinName(e.target.value)}
+          <input type="text" placeholder={t("home.join_name_ph")} value={joinName} onChange={(e) => setJoinName(e.target.value)}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
-          <input type="text" placeholder={t("home.invitePh")} value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} maxLength={INVITE_CODE_LENGTH}
+          <input type="text" placeholder={t("home.invite_ph")} value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} maxLength={INVITE_CODE_LENGTH}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-mono tracking-widest text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100" disabled={busy} />
           <button type="submit" disabled={busy}
             className="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 transition hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
-            {t("home.joinCta")}
+            {t("home.join_cta")}
           </button>
         </form>
       </section>
 
       <p className="text-center text-sm text-slate-500 dark:text-slate-400">
         <Link to={ROUTES.RECOVER} className="font-medium text-teal-700 underline decoration-teal-300 underline-offset-2 hover:text-teal-800 dark:text-teal-400">
-          {t("home.recoverLink")}
+          {t("home.recover_link")}
         </Link>
       </p>
-      <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">{t("home.autoRedirect")}</p>
+      <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">{t("home.auto_redirect")}</p>
     </main>
   );
 }

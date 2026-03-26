@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 import type { Group, MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { LocaleContext } from "@/lib/i18n/locale-context";
+import { t } from "@translate";
 import { ROUTES } from "@/constants";
 
 interface GroupHeaderProps {
@@ -12,12 +14,12 @@ interface GroupHeaderProps {
 
 /** Top of the group room: nav, title, invite, stats, collapsible recovery tips. */
 export default function GroupHeader({ group, member, membersCount, onLeave }: GroupHeaderProps) {
-  const { t, locale } = useLocale();
+  const { locale } = useContext(LocaleContext)!;
 
-  const memberLine = t("group.memberLine", {
+  const memberLine = t("group.member_line", {
     name: member.display_name,
     count: String(membersCount),
-    membersWord: locale === "ja" ? "" : membersCount === 1 ? "member" : "members",
+    membersWord: locale === "jp" ? "" : membersCount === 1 ? "member" : "members",
   });
 
   return (
@@ -28,7 +30,7 @@ export default function GroupHeader({ group, member, membersCount, onLeave }: Gr
             to={ROUTES.HOME}
             className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
           >
-            {t("common.backHome")}
+            {t("common.back_home")}
           </Link>
           <span className="text-slate-300 dark:text-slate-600" aria-hidden>
             ·
@@ -37,7 +39,7 @@ export default function GroupHeader({ group, member, membersCount, onLeave }: Gr
             to={ROUTES.RECOVER}
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
           >
-            {t("home.recoverLink")}
+            {t("home.recover_link")}
           </Link>
         </div>
         <button

@@ -1,5 +1,5 @@
 import type { GroupTab } from "@/types";
-import { useLocale } from "@/lib/i18n/locale-provider";
+import { t } from "@translate";
 
 interface TabDef {
   id: GroupTab;
@@ -21,7 +21,6 @@ interface TabBarProps {
 
 /** Tab bar for the group room. */
 export default function TabBar({ active, onChange }: TabBarProps) {
-  const { t } = useLocale();
   return (
     <div className="flex gap-0.5 overflow-x-auto rounded-xl border border-slate-200 bg-slate-100/80 p-1 sm:gap-1 dark:border-slate-700 dark:bg-slate-800/80">
       {TABS.map((tab) => (

@@ -1,38 +1,36 @@
 import type { Locale, LocaleMap } from "@/types";
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { save } from "../local-storage";
 import { BROWSER_LANGUAGE_KEY } from "@/constants";
-
-
-interface LocaleContextValue {
-  locale: Locale;
-  texts: LocaleMap;
-  onLocaleChange: (locale: Locale) => void;
-}
+import { LocaleContext } from "./locale-context";
+import { sync } from "@translate";
+import React from "react";
 
 interface ProviderProps {
   children: React.ReactNode;
-  texts: LocaleMap; // <en, JSON.Object>
+  texts: LocaleMap;
   browserLanguage: Locale;
 }
-
-const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({
   children,
   texts,
   browserLanguage,
 }: ProviderProps) {
-  const [locale, setLocale] = useState<Locale>(browserLanguage);
+  const [locale, setLocale] = useState<Locale>(() => {
+    sync(browserLanguage, texts[browserLanguage]);
+    return browserLanguage;
+  });
 
-  const onLocaleChange = (locale: Locale) => {
-    save(BROWSER_LANGUAGE_KEY, locale);
-    setLocale(locale);
+  const onLocaleChange = (next: Locale) => {
+    sync(next, texts[next]);
+    save(BROWSER_LANGUAGE_KEY, next);
+    setLocale(next);
   };
 
   return (
     <LocaleContext.Provider value={{ locale, texts, onLocaleChange }}>
-      {children}
+      <React.Fragment key={locale}>{children}</React.Fragment>
     </LocaleContext.Provider>
   );
 }
