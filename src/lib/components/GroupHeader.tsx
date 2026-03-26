@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Group, MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { ROUTES } from "@/constants";
 
 interface GroupHeaderProps {

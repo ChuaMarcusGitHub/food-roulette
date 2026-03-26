@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import type { Group, Notice as NoticeType } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import Notice from "@/lib/components/Notice";
 import { ROUTES } from "@/constants";
 

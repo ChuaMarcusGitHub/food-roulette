@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 
 /** Fixed top-right toolbar with language and theme toggles. */
 export default function AppToolbar() {

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { getDeviceId, getStoredGroupId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { createGroup, setGroupCreator } from "@/lib/supabase/groups";
 import { joinGroupByCode, setMemberPassword } from "@/lib/supabase/members";

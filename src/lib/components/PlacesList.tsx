@@ -1,5 +1,5 @@
 import type { Location } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import MapPreview from "@/lib/components/MapPreview";
 import { useMemo, useState } from "react";
 

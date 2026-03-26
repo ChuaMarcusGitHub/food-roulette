@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
 
 interface MemberPasswordFormProps {

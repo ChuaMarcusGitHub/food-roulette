@@ -8,7 +8,7 @@ import { fetchLocations, addLocation, deleteLocation } from "@/lib/supabase/loca
 import { normalizeLocationUrlForDedup } from "@/lib/utils/location-url";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { useNotice } from "./useNotice";
 import { ROUTES } from "@/constants";
 

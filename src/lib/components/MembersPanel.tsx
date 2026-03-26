@@ -1,5 +1,5 @@
 import type { Group, MemberPublic } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 
 interface MembersPanelProps {
   group: Group;

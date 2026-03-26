@@ -1,6 +1,6 @@
 import { type FormEvent } from "react";
 import type { Group } from "@/types";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 
 interface CreatorControlsProps {
   group: Group;

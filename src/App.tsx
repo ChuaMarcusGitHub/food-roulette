@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Providers from "@/Providers";
+import Providers from "@/providers";
 import AppToolbar from "@/lib/components/AppToolbar";
 import HomePage from "@/pages/HomePage";
 import GroupRoomPage from "@/pages/GroupRoomPage";

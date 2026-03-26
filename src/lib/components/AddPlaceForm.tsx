@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import {
   derivePlaceNameFromGoogleMapsUrl,
   isGoogleMapsUrl,

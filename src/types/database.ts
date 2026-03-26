@@ -77,6 +77,3 @@ export interface Notice {
   text: string;
   isError: boolean;
 }
-
-/** Supported locales. */
-export type Locale = "en" | "ja";

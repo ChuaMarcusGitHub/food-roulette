@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { recoverMemberSession } from "@/lib/supabase/recovery";
 import { useNotice } from "@/lib/hooks/useNotice";

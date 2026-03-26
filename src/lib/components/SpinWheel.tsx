@@ -1,6 +1,6 @@
 import type { Location } from "@/types";
 import type { UseRouletteReturn } from "@/lib/hooks/useRoulette";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import MapPreview from "@/lib/components/MapPreview";
 
 interface SpinWheelProps extends UseRouletteReturn {

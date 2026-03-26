@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useLocale } from "@/lib/i18n/context";
+import { useLocale } from "@/lib/i18n/locale-provider";
 import { getSupabase } from "@/lib/supabase/client";
 import { useGroupRoom } from "@/lib/hooks/useGroupRoom";
 import { useRoulette } from "@/lib/hooks/useRoulette";
