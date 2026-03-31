@@ -5,7 +5,7 @@ import { t } from "@translate";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { recoverMemberSession } from "@/lib/supabase/recovery";
 import { useNotice } from "@/lib/hooks/useNotice";
-import Notice from "@/lib/components/Notice";
+import Notice from "@/lib/components/notice";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 

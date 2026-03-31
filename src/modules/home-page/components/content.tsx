@@ -11,11 +11,11 @@ import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { createGroup, setGroupCreator } from "@/lib/supabase/groups";
 import { joinGroupByCode, setMemberPassword } from "@/lib/supabase/members";
 import { useNotice } from "@/lib/hooks/useNotice";
-import Notice from "@/lib/components/Notice";
+import Notice from "@/lib/components/notice";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 
-export const HomePage = () => {
+export const HomePageContent = () => {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();

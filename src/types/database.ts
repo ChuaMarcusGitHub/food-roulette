@@ -72,8 +72,3 @@ export interface RerollVote {
 /** Tab IDs used in the group room. */
 export type GroupTab = "places" | "add" | "members" | "roulette" | "settings";
 
-/** Notice displayed in the UI. */
-export interface Notice {
-  text: string;
-  isError: boolean;
-}

@@ -9,11 +9,6 @@ export default function App() {
     <Providers>
       <AppToolbar />
       <RouterProvider router={appRouter} />
-      {/* <Routes>
-          <Route path={ROUTES.HOME} element={<HomePage />} />
-          <Route path={ROUTES.RECOVER} element={<RecoverPage />} />
-          <Route path="/group/:groupId" element={<GroupRoomPage />} />
-        </Routes> */}
     </Providers>
   );
 }

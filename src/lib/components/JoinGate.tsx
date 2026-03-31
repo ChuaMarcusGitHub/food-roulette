@@ -1,13 +1,14 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import type { Group, Notice as NoticeType } from "@/types";
+import type { Group } from "@/types";
 import { t } from "@translate";
-import Notice from "@/lib/components/Notice";
+import Notice from "@/lib/components/notice";
 import { PATHS } from "@/routes";
+import { INoticeType } from "../types";
 
 interface JoinGateProps {
   group: Group;
-  notice: NoticeType | null;
+  notice: INoticeType | null;
   busy: boolean;
   onJoin: (name: string) => Promise<void>;
 }

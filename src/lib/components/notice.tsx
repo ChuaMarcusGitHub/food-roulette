@@ -1,7 +1,7 @@
-import type { Notice as NoticeType } from "@/types";
+import type { INoticeType } from "../types";
 
 interface NoticeProps {
-  notice: NoticeType | null;
+  notice: INoticeType | null;
   className?: string;
 }
 

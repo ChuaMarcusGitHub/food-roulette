@@ -3,7 +3,7 @@ import { t } from "@translate";
 import { getSupabase } from "@/lib/supabase/client";
 import { useGroupRoom } from "@/lib/hooks/useGroupRoom";
 import { useRoulette } from "@/lib/hooks/useRoulette";
-import Notice from "@/lib/components/Notice";
+import Notice from "@/lib/components/notice";
 import TabBar from "@/lib/components/TabBar";
 import JoinGate from "@/lib/components/JoinGate";
 import GroupHeader from "@/lib/components/GroupHeader";
