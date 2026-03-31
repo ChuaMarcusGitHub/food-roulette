@@ -13,9 +13,9 @@ import PlacesList from "@/lib/components/PlacesList";
 import AddPlaceForm from "@/lib/components/AddPlaceForm";
 import MembersPanel from "@/lib/components/MembersPanel";
 import SpinWheel from "@/lib/components/SpinWheel";
-import { ROUTES } from "@/constants";
+import { PATHS } from "@/routes";
 
-export default function GroupRoomPage() {
+export const GroupRoomPage = () => {
   const params = useParams();
   const groupId = params?.groupId as string | undefined;
   const supabase = getSupabase();
@@ -33,8 +33,13 @@ export default function GroupRoomPage() {
   if (!room.configured) {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.configure_env")}</p>
-        <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
+        <p className="text-slate-600 dark:text-slate-400">
+          {t("group.configure_env")}
+        </p>
+        <Link
+          to={PATHS.HOME}
+          className="mt-4 inline-block text-teal-700 underline dark:text-teal-400"
+        >
           {t("common.back_home")}
         </Link>
       </main>
@@ -44,8 +49,13 @@ export default function GroupRoomPage() {
   if (!groupId || typeof groupId !== "string") {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.missing_group")}</p>
-        <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
+        <p className="text-slate-600 dark:text-slate-400">
+          {t("group.missing_group")}
+        </p>
+        <Link
+          to={PATHS.HOME}
+          className="mt-4 inline-block text-teal-700 underline dark:text-teal-400"
+        >
           {t("common.back_home")}
         </Link>
       </main>
@@ -63,8 +73,13 @@ export default function GroupRoomPage() {
   if (!room.group) {
     return (
       <main className="mx-auto max-w-lg px-4 py-10 dark:text-slate-200">
-        <p className="text-slate-600 dark:text-slate-400">{t("group.not_loaded")}</p>
-        <Link to={ROUTES.HOME} className="mt-4 inline-block text-teal-700 underline dark:text-teal-400">
+        <p className="text-slate-600 dark:text-slate-400">
+          {t("group.not_loaded")}
+        </p>
+        <Link
+          to={PATHS.HOME}
+          className="mt-4 inline-block text-teal-700 underline dark:text-teal-400"
+        >
           {t("common.back_home")}
         </Link>
       </main>
@@ -136,13 +151,19 @@ export default function GroupRoomPage() {
       )}
 
       {room.tab === "add" && (
-        <AddPlaceForm busy={room.busy} onAdd={room.handleAddPlace} showNotice={room.showNotice} />
+        <AddPlaceForm
+          busy={room.busy}
+          onAdd={room.handleAddPlace}
+          showNotice={room.showNotice}
+        />
       )}
 
       {room.tab === "settings" && (
         <section className="space-y-4">
           <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-            {room.isCreator ? t("group.settings_intro_creator") : t("group.settings_intro_member")}
+            {room.isCreator
+              ? t("group.settings_intro_creator")
+              : t("group.settings_intro_member")}
           </p>
           <div className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900/40">
             <MemberPasswordForm
@@ -168,7 +189,10 @@ export default function GroupRoomPage() {
         </section>
       )}
 
-      <div className={room.tab === "roulette" ? "block" : "hidden"} aria-hidden={room.tab !== "roulette"}>
+      <div
+        className={room.tab === "roulette" ? "block" : "hidden"}
+        aria-hidden={room.tab !== "roulette"}
+      >
         <SpinWheel
           {...roulette}
           locations={room.locations}
@@ -178,4 +202,4 @@ export default function GroupRoomPage() {
       </div>
     </main>
   );
-}
+};

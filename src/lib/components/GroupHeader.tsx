@@ -3,7 +3,8 @@ import { useContext } from "react";
 import type { Group, MemberPublic } from "@/types";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
-import { ROUTES } from "@/constants";
+import { PATHS } from "@/routes";
+
 
 interface GroupHeaderProps {
   group: Group;
@@ -27,7 +28,7 @@ export default function GroupHeader({ group, member, membersCount, onLeave }: Gr
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 pb-4 dark:border-slate-700/80">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
           <Link
-            to={ROUTES.HOME}
+            to={PATHS.HOME}
             className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
           >
             {t("common.back_home")}
@@ -36,7 +37,7 @@ export default function GroupHeader({ group, member, membersCount, onLeave }: Gr
             ·
           </span>
           <Link
-            to={ROUTES.RECOVER}
+            to={PATHS.RECOVER}
             className="font-medium text-teal-700 hover:underline dark:text-teal-400"
           >
             {t("home.recover_link")}

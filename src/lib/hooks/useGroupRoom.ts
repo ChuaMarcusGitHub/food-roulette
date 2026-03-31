@@ -10,7 +10,7 @@ import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
 import { t } from "@translate";
 import { useNotice } from "./useNotice";
-import { ROUTES } from "@/constants";
+import { PATHS } from "@/routes";
 
 export interface UseGroupRoomReturn {
   // state
@@ -137,7 +137,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       .on("postgres_changes", { event: "DELETE", schema: "public", table: "groups", filter: `id=eq.${groupId}` }, () => {
         setStoredGroupId(null);
         showNotice(t("group.group_deleted"), true);
-        navigate(ROUTES.HOME, { replace: true });
+        navigate(PATHS.HOME, { replace: true });
       })
       .subscribe();
     return () => { supabase.removeChannel(ch); };
@@ -174,14 +174,14 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         if (nextDeviceId && thisDeviceId && nextDeviceId !== thisDeviceId) {
           setStoredGroupId(null);
           showNotice(t("group.session_moved"), true);
-          navigate(ROUTES.HOME, { replace: true });
+          navigate(PATHS.HOME, { replace: true });
         }
       })
       .on("postgres_changes", { event: "DELETE", schema: "public", table: "group_members", filter: `id=eq.${member.id}` }, () => {
         if (leavingRef.current) return;
         setStoredGroupId(null);
         showNotice(t("group.kicked"), true);
-        navigate(ROUTES.HOME, { replace: true });
+        navigate(PATHS.HOME, { replace: true });
       })
       .subscribe();
     return () => { supabase.removeChannel(ch); };
@@ -335,7 +335,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
       if (error) throw new Error(error);
       setStoredGroupId(null);
       showNotice(t("group.group_deleted_local"));
-      navigate(ROUTES.HOME, { replace: true });
+      navigate(PATHS.HOME, { replace: true });
     } catch (err: unknown) {
       showNotice(err instanceof Error ? err.message : t("group.err_delete"), true);
     } finally { setBusy(false); }
@@ -375,7 +375,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
     setStoredGroupId(null);
 
     if (!supabase || !groupId || !member?.id) {
-      navigate(ROUTES.HOME);
+      navigate(PATHS.HOME);
       return;
     }
 
@@ -385,7 +385,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
         // Even if the RPC fails, still leave the UI.
       })
       .finally(() => {
-        navigate(ROUTES.HOME);
+        navigate(PATHS.HOME);
       });
   }, [supabase, groupId, member?.id, navigate]);
 

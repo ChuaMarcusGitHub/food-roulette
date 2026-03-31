@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import type { Group, Notice as NoticeType } from "@/types";
 import { t } from "@translate";
 import Notice from "@/lib/components/Notice";
-import { ROUTES } from "@/constants";
+import { PATHS } from "@/routes";
 
 interface JoinGateProps {
   group: Group;
@@ -27,10 +27,10 @@ export default function JoinGate({ group, notice, busy, onJoin }: JoinGateProps)
   return (
     <main className="mx-auto max-w-lg px-4 py-10 pb-16 dark:text-slate-200">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <Link to={ROUTES.HOME} className="text-sm text-slate-500 underline decoration-slate-300 underline-offset-2 dark:text-slate-400 dark:decoration-slate-600">
+        <Link to={PATHS.HOME} className="text-sm text-slate-500 underline decoration-slate-300 underline-offset-2 dark:text-slate-400 dark:decoration-slate-600">
           {t("common.back_home")}
         </Link>
-        <Link to={ROUTES.RECOVER} className="text-sm text-teal-700 underline decoration-teal-300 underline-offset-2 dark:text-teal-400">
+        <Link to={PATHS.RECOVER} className="text-sm text-teal-700 underline decoration-teal-300 underline-offset-2 dark:text-teal-400">
           {t("home.recover_link")}
         </Link>
       </div>
