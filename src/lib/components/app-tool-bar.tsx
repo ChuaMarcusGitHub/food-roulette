@@ -4,7 +4,7 @@ import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
 
 /** Fixed top-right toolbar with language and theme toggles. */
-export default function AppToolbar() {
+export const AppToolbar = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const { locale, onLocaleChange } = useContext(LocaleContext)!;
   const [mounted, setMounted] = useState(false);
@@ -43,4 +43,4 @@ export default function AppToolbar() {
       </button>
     </div>
   );
-}
+};

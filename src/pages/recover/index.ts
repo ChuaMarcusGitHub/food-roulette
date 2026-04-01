@@ -1,1 +1,1 @@
-export * from './RecoverPage'
+export * from './page'

@@ -14,7 +14,7 @@ interface MembersPanelProps {
 }
 
 /** Members tab: list, remove, and delete group. */
-export default function MembersPanel({
+export const MembersPanel = ({
   group,
   members,
   currentMemberId,
@@ -24,7 +24,7 @@ export default function MembersPanel({
   onTransferCreator,
   onClaimCreator,
   onDeleteGroup,
-}: MembersPanelProps) {
+}: MembersPanelProps) => {
 
   return (
     <section className="space-y-4">
@@ -103,4 +103,4 @@ export default function MembersPanel({
       ) : null}
     </section>
   );
-}
+};

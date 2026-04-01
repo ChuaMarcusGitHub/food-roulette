@@ -12,11 +12,11 @@ interface AddPlaceFormProps {
 }
 
 /** Add a place from a Google Maps URL only; name is derived from the link. */
-export default function AddPlaceForm({
+export const AddPlaceForm = ({
   busy,
   onAdd,
   showNotice,
-}: AddPlaceFormProps) {
+}: AddPlaceFormProps) => {
   const [url, setUrl] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -114,4 +114,4 @@ export default function AddPlaceForm({
       </form>
     </section>
   );
-}
+};

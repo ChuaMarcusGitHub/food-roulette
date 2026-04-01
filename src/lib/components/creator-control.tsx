@@ -15,7 +15,7 @@ interface CreatorControlsProps {
 }
 
 /** Creator-only controls: invite code management and join lock. */
-export default function CreatorControls({
+export const CreatorControls = ({
   group,
   inviteDraft,
   setInviteDraft,
@@ -24,7 +24,7 @@ export default function CreatorControls({
   onRandomize,
   onToggleLock,
   embedded = false,
-}: CreatorControlsProps) {
+}: CreatorControlsProps) => {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -66,4 +66,4 @@ export default function CreatorControls({
       </label>
     </div>
   );
-}
+};

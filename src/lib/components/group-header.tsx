@@ -14,7 +14,7 @@ interface GroupHeaderProps {
 }
 
 /** Top of the group room: nav, title, invite, stats, collapsible recovery tips. */
-export default function GroupHeader({ group, member, membersCount, onLeave }: GroupHeaderProps) {
+export const GroupHeader = ({ group, member, membersCount, onLeave }: GroupHeaderProps) => {
   const { locale } = useContext(LocaleContext)!;
 
   const memberLine = t("group.member_line", {
@@ -67,4 +67,4 @@ export default function GroupHeader({ group, member, membersCount, onLeave }: Gr
       {/* recovery banner removed for cleaner UI */}
     </div>
   );
-}
+};

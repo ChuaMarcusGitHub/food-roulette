@@ -20,7 +20,7 @@ interface TabBarProps {
 }
 
 /** Tab bar for the group room. */
-export default function TabBar({ active, onChange }: TabBarProps) {
+export const TabBar = ({ active, onChange }: TabBarProps) => {
   return (
     <div className="flex gap-0.5 overflow-x-auto rounded-xl border border-slate-200 bg-slate-100/80 p-1 sm:gap-1 dark:border-slate-700 dark:bg-slate-800/80">
       {TABS.map((tab) => (
@@ -39,4 +39,4 @@ export default function TabBar({ active, onChange }: TabBarProps) {
       ))}
     </div>
   );
-}
+};

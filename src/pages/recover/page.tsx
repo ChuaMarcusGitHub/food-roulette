@@ -2,10 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { t } from "@translate";
-import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
-import { recoverMemberSession } from "@/lib/supabase/recovery";
-import { useNotice } from "@/lib/hooks/useNotice";
-import Notice from "@/lib/components/notice";
+import { getSupabase, isSupabaseConfigured, recoverMemberSession } from "@/lib/supabase";
+import { useNotice } from "@/lib/hooks/use-notice";
+import { Notice } from "@/lib/components";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 

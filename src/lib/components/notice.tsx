@@ -6,7 +6,7 @@ interface NoticeProps {
 }
 
 /** Dismissible notice banner (error or success). */
-export default function Notice({ notice, className = "" }: NoticeProps) {
+export const Notice = ({ notice, className = "" }: NoticeProps) => {
   if (!notice) return null;
   return (
     <div
@@ -20,4 +20,4 @@ export default function Notice({ notice, className = "" }: NoticeProps) {
       {notice.text}
     </div>
   );
-}
+};

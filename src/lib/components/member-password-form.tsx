@@ -13,13 +13,13 @@ interface MemberPasswordFormProps {
 }
 
 /** Per-member recovery password: prompt only until set; then compact + change. */
-export default function MemberPasswordForm({
+export const MemberPasswordForm = ({
   member,
   busy,
   onSave,
   showNotice,
   embedded = false,
-}: MemberPasswordFormProps) {
+}: MemberPasswordFormProps) => {
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [editing, setEditing] = useState(false);
@@ -142,4 +142,4 @@ export default function MemberPasswordForm({
       </form>
     </div>
   );
-}
+};

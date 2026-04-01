@@ -1,1 +1,1 @@
-export * from "./GroupRoomPage"
+export * from "./page"

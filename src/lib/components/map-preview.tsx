@@ -10,7 +10,7 @@ interface MapPreviewProps {
 }
 
 /** Embeds a Google Maps iframe for the given URL. */
-export default function MapPreview({ url, className = "", openUrlOnClick }: MapPreviewProps) {
+export const MapPreview = ({ url, className = "", openUrlOnClick }: MapPreviewProps) => {
   const raw = (url ?? "").trim();
   const [resolvedUrl, setResolvedUrl] = useState(raw);
 
@@ -64,4 +64,4 @@ export default function MapPreview({ url, className = "", openUrlOnClick }: MapP
       ) : null}
     </div>
   );
-}
+};

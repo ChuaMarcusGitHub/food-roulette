@@ -1,5 +1,5 @@
 import Providers from "@/providers";
-import AppToolbar from "@/lib/components/AppToolbar";
+import { AppToolbar } from "@/lib/components";
 
 import { RouterProvider } from "react-router";
 import { appRouter } from "@routes";

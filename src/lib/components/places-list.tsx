@@ -1,6 +1,6 @@
 import type { Location } from "@/types";
 import { t } from "@translate";
-import MapPreview from "@/lib/components/MapPreview";
+import { MapPreview } from "@/lib/components";
 import { useMemo, useState } from "react";
 
 interface PlacesListProps {
@@ -22,13 +22,13 @@ function getDomainLabel(rawUrl: string): string {
 }
 
 /** All places tab content. */
-export default function PlacesList({
+export const PlacesList = ({
   locations,
   memberNameById,
   isCreator,
   busy,
   onRemovePlace,
-}: PlacesListProps) {
+}: PlacesListProps) => {
   const [query, setQuery] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const PAGE_SIZE = 8;
@@ -40,8 +40,12 @@ export default function PlacesList({
     return locations.filter((loc) => {
       const name = loc.name?.toLowerCase() ?? "";
       const url = loc.url?.toLowerCase() ?? "";
-      const by = loc.added_by_member_id ? (memberNameById[loc.added_by_member_id] ?? "") : "";
-      return name.includes(q) || url.includes(q) || by.toLowerCase().includes(q);
+      const by = loc.added_by_member_id
+        ? (memberNameById[loc.added_by_member_id] ?? "")
+        : "";
+      return (
+        name.includes(q) || url.includes(q) || by.toLowerCase().includes(q)
+      );
     });
   }, [locations, memberNameById, query]);
 
@@ -70,7 +74,9 @@ export default function PlacesList({
         />
         <p className="text-xs text-slate-500 dark:text-slate-400">
           {filtered.length === locations.length ? null : (
-            <span>{filtered.length} / {locations.length}</span>
+            <span>
+              {filtered.length} / {locations.length}
+            </span>
           )}
         </p>
       </div>
@@ -83,7 +89,10 @@ export default function PlacesList({
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
           <ul className="divide-y divide-slate-100 dark:divide-slate-800">
             {shown.map((loc) => {
-              const addedBy = loc.added_by_member_id ? memberNameById[loc.added_by_member_id] ?? t("common.someone") : t("common.someone");
+              const addedBy = loc.added_by_member_id
+                ? (memberNameById[loc.added_by_member_id] ??
+                  t("common.someone"))
+                : t("common.someone");
               const isExpanded = expandedId === loc.id;
               const label = loc.name?.trim() || t("roulette.place_fallback");
               const domain = getDomainLabel(loc.url);
@@ -92,14 +101,27 @@ export default function PlacesList({
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <button
                       type="button"
-                      onClick={() => setExpandedId((prev) => (prev === loc.id ? null : loc.id))}
+                      onClick={() =>
+                        setExpandedId((prev) =>
+                          prev === loc.id ? null : loc.id,
+                        )
+                      }
                       className="min-w-0 flex-1 text-left"
                     >
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">{label}</p>
+                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+                        {label}
+                      </p>
                       <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                         <span className="truncate">{domain}</span>
-                        <span aria-hidden className="text-slate-300 dark:text-slate-600">·</span>
-                        <span className="truncate">{t("group.add_by")} {addedBy}</span>
+                        <span
+                          aria-hidden
+                          className="text-slate-300 dark:text-slate-600"
+                        >
+                          ·
+                        </span>
+                        <span className="truncate">
+                          {t("group.add_by")} {addedBy}
+                        </span>
                       </p>
                     </button>
 
@@ -126,7 +148,10 @@ export default function PlacesList({
                           type="button"
                           disabled={busy}
                           onClick={() => {
-                            if (!window.confirm(t("group.confirm_remove_place"))) return;
+                            if (
+                              !window.confirm(t("group.confirm_remove_place"))
+                            )
+                              return;
                             void onRemovePlace(loc.id);
                           }}
                           className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950"
@@ -139,7 +164,11 @@ export default function PlacesList({
 
                   {isExpanded ? (
                     <div className="mt-3 space-y-3">
-                      <MapPreview url={loc.url} openUrlOnClick={loc.url} className="h-[220px]" />
+                      <MapPreview
+                        url={loc.url}
+                        openUrlOnClick={loc.url}
+                        className="h-[220px]"
+                      />
                     </div>
                   ) : null}
                 </li>
@@ -164,7 +193,11 @@ export default function PlacesList({
           </button>
 
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            Page <span className="font-semibold text-slate-900 dark:text-slate-100">{safePage}</span> / {totalPages}
+            Page{" "}
+            <span className="font-semibold text-slate-900 dark:text-slate-100">
+              {safePage}
+            </span>{" "}
+            / {totalPages}
           </p>
 
           <button
@@ -182,4 +215,4 @@ export default function PlacesList({
       ) : null}
     </section>
   );
-}
+};

@@ -9,7 +9,7 @@ import { normalizeLocationUrlForDedup } from "@/lib/utils/location-url";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { generateUniqueInviteCode } from "@/lib/utils/invite";
 import { t } from "@translate";
-import { useNotice } from "./useNotice";
+import { useNotice } from "./use-notice";
 import { PATHS } from "@/routes";
 
 export interface UseGroupRoomReturn {

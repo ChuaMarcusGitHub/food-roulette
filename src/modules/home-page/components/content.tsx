@@ -4,14 +4,12 @@ import {
   getDeviceId,
   getStoredGroupId,
   setStoredGroupId,
-} from "@/lib/utils/device";
-import { generateUniqueInviteCode } from "@/lib/utils/invite";
+  generateUniqueInviteCode,
+} from "@/lib/utils";
 import { t } from "@translate";
-import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
-import { createGroup, setGroupCreator } from "@/lib/supabase/groups";
-import { joinGroupByCode, setMemberPassword } from "@/lib/supabase/members";
-import { useNotice } from "@/lib/hooks/useNotice";
-import Notice from "@/lib/components/notice";
+import { getSupabase, isSupabaseConfigured, createGroup, setGroupCreator, joinGroupByCode, setMemberPassword } from "@/lib/supabase";
+import { useNotice } from "@/lib/hooks/use-notice";
+import { Notice } from "@/lib/components";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 

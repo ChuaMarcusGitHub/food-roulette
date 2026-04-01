@@ -1,18 +1,19 @@
 import { useParams, Link } from "react-router-dom";
 import { t } from "@translate";
 import { getSupabase } from "@/lib/supabase/client";
-import { useGroupRoom } from "@/lib/hooks/useGroupRoom";
-import { useRoulette } from "@/lib/hooks/useRoulette";
-import Notice from "@/lib/components/notice";
-import TabBar from "@/lib/components/TabBar";
-import JoinGate from "@/lib/components/JoinGate";
-import GroupHeader from "@/lib/components/GroupHeader";
-import MemberPasswordForm from "@/lib/components/MemberPasswordForm";
-import CreatorControls from "@/lib/components/CreatorControls";
-import PlacesList from "@/lib/components/PlacesList";
-import AddPlaceForm from "@/lib/components/AddPlaceForm";
-import MembersPanel from "@/lib/components/MembersPanel";
-import SpinWheel from "@/lib/components/SpinWheel";
+import { useGroupRoom, useRoulette } from "@/lib/hooks";
+import {
+  Notice,
+  TabBar,
+  JoinGate,
+  GroupHeader,
+  MemberPasswordForm,
+  CreatorControls,
+  PlacesList,
+  AddPlaceForm,
+  MembersPanel,
+  SpinWheel,
+} from "@/lib/components";
 import { PATHS } from "@/routes";
 
 export const GroupRoomPage = () => {

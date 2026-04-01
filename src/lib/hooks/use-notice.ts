@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Notice } from "@/types";
 import { NOTICE_TIMEOUT_MS } from "@/constants";
+import { INoticeType } from "../types";
 
 interface UseNoticeReturn {
-  notice: Notice | null;
+  notice: INoticeType | null;
   showNotice: (text: string, isError?: boolean) => void;
   clearNotice: () => void;
 }
 
 /** Self-clearing notice/toast state. */
 export function useNotice(): UseNoticeReturn {
-  const [notice, setNotice] = useState<Notice | null>(null);
+  const [notice, setNotice] = useState<INoticeType | null>(null);
 
   useEffect(() => {
     if (!notice?.text) return undefined;

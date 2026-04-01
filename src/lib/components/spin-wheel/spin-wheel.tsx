@@ -1,9 +1,12 @@
 import type { Location } from "@/types";
-import type { UseRouletteReturn } from "@/lib/hooks/useRoulette";
+import type { UseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
-import MapPreview from "@/lib/components/MapPreview";
+import { MapPreview } from "@/lib/components";
+import { SpinProgressRing } from "./spin-progress-ring";
+import { placeLabel } from "./utils/place-label";
+import { getDomainLabel } from "./utils/get-domain-label";
 
 interface SpinWheelProps extends UseRouletteReturn {
   locations: Location[];
@@ -11,47 +14,10 @@ interface SpinWheelProps extends UseRouletteReturn {
   addTabLabel: string;
 }
 
-function placeLabel(loc: Location | undefined, fallback: string): string {
-  return loc?.name?.trim() || fallback;
-}
 
-function getDomainLabel(rawUrl: string): string {
-  try {
-    const u = new URL(rawUrl);
-    return u.hostname.replace(/^www\./, "") || rawUrl;
-  } catch {
-    return rawUrl;
-  }
-}
-
-function SpinProgressRing({ progress }: { progress: number }) {
-  const r = 42;
-  const c = 2 * Math.PI * r;
-  const dash = c * Math.max(0, Math.min(1, progress));
-  return (
-    <svg
-      className="pointer-events-none absolute inset-0 h-full w-full -rotate-90 motion-safe:transition-[stroke-dasharray] motion-reduce:transition-none"
-      viewBox="0 0 100 100"
-      aria-hidden
-    >
-      <circle cx="50" cy="50" r={r} fill="none" className="stroke-slate-200 dark:stroke-slate-600" strokeWidth="2.5" />
-      <circle
-        cx="50"
-        cy="50"
-        r={r}
-        fill="none"
-        stroke="#0d9488"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeDasharray={`${dash} ${c}`}
-        className="motion-safe:duration-75 motion-reduce:duration-0"
-      />
-    </svg>
-  );
-}
 
 /** Roulette spin display, result, and voting UI. */
-export default function SpinWheel({
+export const SpinWheel = ({
   phase,
   showingLoc,
   winnerLoc,
@@ -65,7 +31,7 @@ export default function SpinWheel({
   locations,
   membersCount,
   addTabLabel,
-}: SpinWheelProps) {
+}: SpinWheelProps) => {
   const { locale } = useContext(LocaleContext)!;
 
   const majorityNeed = membersCount > 0 ? Math.floor(membersCount / 2) + 1 : 0;
@@ -135,7 +101,9 @@ export default function SpinWheel({
               </div>
             ) : null}
 
-            <p className="mt-3 truncate text-center text-xs text-slate-500 dark:text-slate-400">{showingLoc.url}</p>
+            <p className="mt-3 truncate text-center text-xs text-slate-500 dark:text-slate-400">
+              {showingLoc.url}
+            </p>
           </div>
         )}
 
@@ -162,32 +130,44 @@ export default function SpinWheel({
                 </a>
                 <button
                   type="button"
-                  onClick={() => { void navigator.clipboard?.writeText(winnerLoc.url); }}
+                  onClick={() => {
+                    void navigator.clipboard?.writeText(winnerLoc.url);
+                  }}
                   className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
                 >
                   Copy
                 </button>
               </div>
             </div>
-            <MapPreview url={winnerLoc.url} openUrlOnClick={winnerLoc.url} className="mt-3 h-[min(52vw,16rem)] sm:h-64" />
+            <MapPreview
+              url={winnerLoc.url}
+              openUrlOnClick={winnerLoc.url}
+              className="mt-3 h-[min(52vw,16rem)] sm:h-64"
+            />
 
             <div className="mt-5 rounded-lg border border-slate-200 bg-white/60 p-4 dark:border-slate-600 dark:bg-slate-900/30">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="text-sm text-slate-600 dark:text-slate-400">
                   {t("roulette.vote_line")}{" "}
-                  <span className="font-semibold text-slate-900 dark:text-slate-100">{votes.length}</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
+                    {votes.length}
+                  </span>
                   {locale === "jp" ? (
                     <> / {membersCount}人</>
                   ) : (
                     <> / {membersCount} members</>
                   )}
                   {majorityReached ? (
-                    <span className="ml-2 text-teal-700 dark:text-teal-400">{t("roulette.majority")}</span>
+                    <span className="ml-2 text-teal-700 dark:text-teal-400">
+                      {t("roulette.majority")}
+                    </span>
                   ) : null}
                 </p>
                 {majorityNeed > 0 ? (
                   <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                    {locale === "jp" ? `過半数: ${majorityNeed}票` : `Majority: ${majorityNeed} votes`}
+                    {locale === "jp"
+                      ? `過半数: ${majorityNeed}票`
+                      : `Majority: ${majorityNeed} votes`}
                   </span>
                 ) : null}
               </div>
@@ -207,7 +187,9 @@ export default function SpinWheel({
               >
                 {voted ? t("roulette.voted") : t("roulette.vote_btn")}
               </button>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{t("roulette.vote_hint")}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                {t("roulette.vote_hint")}
+              </p>
             </div>
           </div>
         )}
@@ -223,4 +205,4 @@ export default function SpinWheel({
       </div>
     </div>
   );
-}
+};
