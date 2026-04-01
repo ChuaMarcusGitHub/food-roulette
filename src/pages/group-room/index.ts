@@ -1,1 +1,1 @@
-export * from "./page"
+export * from "./group-room-page"

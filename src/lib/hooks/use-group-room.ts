@@ -25,7 +25,7 @@ import { normalizeLocationUrlForDedup, getDeviceId, setStoredGroupId, generateUn
 import { t } from "@translate";
 import { useNotice } from "./use-notice";
 import { PATHS } from "@/routes";
-import { GroupTab, IGroup, IMemberPublic } from "../types";
+import { GroupTab, IGroup, ILocation, IMemberPublic } from "../types";
 
 export interface UseGroupRoomReturn {
   // state
@@ -33,7 +33,7 @@ export interface UseGroupRoomReturn {
   group: IGroup | null;
   member: IMemberPublic | null;
   members: IMemberPublic[];
-  locations: Location[];
+  locations: ILocation[];
   tab: GroupTab;
   setTab: (t: GroupTab) => void;
   fetched: boolean;
@@ -72,7 +72,7 @@ export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
   const [group, setGroup] = useState<IGroup | null>(null);
   const [member, setMember] = useState<IMemberPublic | null>(null);
   const [members, setMembers] = useState<IMemberPublic[]>([]);
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [locations, setLocations] = useState<ILocation[]>([]);
   const [tab, setTab] = useState<GroupTab>("roulette");
   const [inviteDraft, setInviteDraft] = useState("");
   const [busy, setBusy] = useState(false);

@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { normaliseRun, fetchLatestRun, fetchVotes, startRoulette, voteReroll } from "@/lib/supabase/roulette";
 import type { SupabaseClient } from "@/lib/supabase/client";
-import type { Location, INormalisedRun, IRouletteRun } from "../types";
+import type { ILocation, INormalisedRun, IRouletteRun } from "../types";
 
 type Phase = "idle" | "spinning" | "result";
 
 export interface SpinningContext {
-  prev?: Location;
-  next?: Location;
+  prev?: ILocation;
+  next?: ILocation;
   index: number;
   total: number;
 }
 
 export interface UseRouletteReturn {
   phase: Phase;
-  showingLoc: Location | undefined;
-  winnerLoc: Location | undefined;
+  showingLoc: ILocation | undefined;
+  winnerLoc: ILocation | undefined;
   votes: string[];
   voted: boolean;
   majorityReached: boolean;
@@ -32,7 +32,7 @@ export function useRoulette(
   groupId: string | undefined,
   memberId: string | undefined,
   membersCount: number,
-  locations: Location[],
+  locations: ILocation[],
   onNotice: (msg: string, isError: boolean) => void,
 ): UseRouletteReturn {
   const [activeRun, setActiveRun] = useState<INormalisedRun | null>(null);

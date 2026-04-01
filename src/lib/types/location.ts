@@ -1,5 +1,5 @@
 /** Row type for `locations` table. */
-export interface Location {
+export interface ILocation {
   id: string;
   group_id: string;
   url: string;

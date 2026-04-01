@@ -13,7 +13,7 @@ import { Notice } from "@/lib/components";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 
-export const HomePageContent = () => {
+export const LandingPageContent = () => {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();

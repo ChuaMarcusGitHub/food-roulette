@@ -16,7 +16,7 @@ import {
 } from "@/lib/components";
 import { PATHS } from "@/routes";
 
-export const GroupRoomPage = () => {
+export const LandingPageContent = () => {
   const params = useParams();
   const groupId = params?.groupId as string | undefined;
   const supabase = getSupabase();

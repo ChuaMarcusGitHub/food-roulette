@@ -8,7 +8,7 @@ import { Notice } from "@/lib/components";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 
-export const RecoverPage = () => {
+export const LandingPageContent = () => {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();

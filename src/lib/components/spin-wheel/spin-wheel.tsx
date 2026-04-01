@@ -1,4 +1,3 @@
-import type { Location } from "@/types";
 import type { UseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
@@ -7,14 +6,13 @@ import { MapPreview } from "@/lib/components";
 import { SpinProgressRing } from "./spin-progress-ring";
 import { placeLabel } from "./utils/place-label";
 import { getDomainLabel } from "./utils/get-domain-label";
+import { ILocation } from "@/lib/types";
 
 interface SpinWheelProps extends UseRouletteReturn {
-  locations: Location[];
+  locations: ILocation[];
   membersCount: number;
   addTabLabel: string;
 }
-
-
 
 /** Roulette spin display, result, and voting UI. */
 export const SpinWheel = ({
