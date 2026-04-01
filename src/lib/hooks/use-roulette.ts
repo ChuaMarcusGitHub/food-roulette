@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { SupabaseClient } from "@/lib/supabase/client";
-import type { Location, NormalisedRun, RouletteRun } from "@/types";
 import { normaliseRun, fetchLatestRun, fetchVotes, startRoulette, voteReroll } from "@/lib/supabase/roulette";
+import type { SupabaseClient } from "@/lib/supabase/client";
+import type { Location, INormalisedRun, IRouletteRun } from "../types";
 
 type Phase = "idle" | "spinning" | "result";
 
@@ -35,7 +35,7 @@ export function useRoulette(
   locations: Location[],
   onNotice: (msg: string, isError: boolean) => void,
 ): UseRouletteReturn {
-  const [activeRun, setActiveRun] = useState<NormalisedRun | null>(null);
+  const [activeRun, setActiveRun] = useState<INormalisedRun | null>(null);
   const [tickIndex, setTickIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("idle");
   const [votes, setVotes] = useState<string[]>([]);
@@ -43,7 +43,7 @@ export function useRoulette(
   const rafRef = useRef<number | null>(null);
 
   const applyRun = useCallback((row: unknown) => {
-    const r = normaliseRun(row as Partial<RouletteRun>);
+    const r = normaliseRun(row as Partial<IRouletteRun>);
     if (!r?.sequence_ids?.length) return;
     setActiveRun(r);
     const start = new Date(r.started_at).getTime();

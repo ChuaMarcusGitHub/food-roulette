@@ -27,11 +27,11 @@ const buttonVariants = cva(
   },
 );
 
-interface ButtonProps
+interface IButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
-export const Button = ({ intent, size, className, ...props }: ButtonProps) => (
+export const Button = ({ intent, size, className, ...props }: IButtonProps) => (
   <button
     type="button"
     className={cn(buttonVariants({ intent, size }), className)}

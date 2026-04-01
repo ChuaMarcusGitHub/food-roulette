@@ -29,10 +29,10 @@ const cardVariants = cva(
   },
 );
 
-interface CardProps
+interface ICardProps
   extends HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {}
 
-export const Card = ({ intent, padding, className, ...props }: CardProps) => (
+export const Card = ({ intent, padding, className, ...props }: ICardProps) => (
   <div className={cn(cardVariants({ intent, padding }), className)} {...props} />
 );

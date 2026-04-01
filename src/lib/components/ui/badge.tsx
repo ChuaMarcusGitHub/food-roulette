@@ -19,10 +19,10 @@ const badgeVariants = cva(
   },
 );
 
-interface BadgeProps
+interface IBadgeProps
   extends HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof badgeVariants> {}
 
-export const Badge = ({ intent, className, ...props }: BadgeProps) => (
+export const Badge = ({ intent, className, ...props }: IBadgeProps) => (
   <span className={cn(badgeVariants({ intent }), className)} {...props} />
 );
