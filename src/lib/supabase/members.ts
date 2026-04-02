@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@/lib/supabase/client";
-import type { MemberPublic } from "@/types";
+import { IMemberPublic } from "../types";
 
 const MEMBER_SELECT = "id, display_name, created_at, group_id, device_id, password_set";
 
@@ -7,13 +7,13 @@ const MEMBER_SELECT = "id, display_name, created_at, group_id, device_id, passwo
 export async function fetchMembers(
   supabase: SupabaseClient,
   groupId: string,
-): Promise<{ data: MemberPublic[]; error: string | null }> {
+): Promise<{ data: IMemberPublic[]; error: string | null }> {
   const { data, error } = await supabase
     .from("group_members")
     .select("id, display_name, created_at")
     .eq("group_id", groupId)
     .order("created_at", { ascending: true });
-  return { data: (data ?? []) as MemberPublic[], error: error?.message ?? null };
+  return { data: (data ?? []) as IMemberPublic[], error: error?.message ?? null };
 }
 
 /** Fetch the current device's member row. */
@@ -21,14 +21,14 @@ export async function fetchSelf(
   supabase: SupabaseClient,
   groupId: string,
   deviceId: string,
-): Promise<{ data: MemberPublic | null; error: string | null }> {
+): Promise<{ data: IMemberPublic | null; error: string | null }> {
   const { data, error } = await supabase
     .from("group_members")
     .select(MEMBER_SELECT)
     .eq("group_id", groupId)
     .eq("device_id", deviceId)
     .maybeSingle();
-  return { data: data as MemberPublic | null, error: error?.message ?? null };
+  return { data: data as IMemberPublic | null, error: error?.message ?? null };
 }
 
 interface JoinResult {
