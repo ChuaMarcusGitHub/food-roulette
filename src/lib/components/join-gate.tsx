@@ -1,20 +1,17 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import type { Group } from "@/types";
 import { t } from "@translate";
-import { Notice } from "@/lib/components";
 import { PATHS } from "@/routes";
-import { INoticeType } from "../types";
+import { IGroup } from "../types";
 
 interface JoinGateProps {
-  group: Group;
-  notice: INoticeType | null;
+  group: IGroup;
   busy: boolean;
   onJoin: (name: string) => Promise<void>;
 }
 
 /** Pre-join gate: shows invite code and a name input. */
-export const JoinGate = ({ group, notice, busy, onJoin }: JoinGateProps) => {
+export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
   const [joinName, setJoinName] = useState("");
   const locked = !!group.join_locked;
 
@@ -61,8 +58,6 @@ export const JoinGate = ({ group, notice, busy, onJoin }: JoinGateProps) => {
           {t("group.room_locked_hint")}
         </div>
       ) : null}
-
-      <Notice notice={notice} className="mb-6 mt-6" />
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">

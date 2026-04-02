@@ -1,25 +1,28 @@
 import { useParams, Link } from "react-router-dom";
 import { t } from "@translate";
 import { getSupabase } from "@/lib/supabase/client";
-import { useGroupRoom, useRoulette } from "@/lib/hooks";
+import { useGroupRoom, useNotice, useRoulette } from "@/lib/hooks";
 import {
-  Notice,
   TabBar,
   JoinGate,
   GroupHeader,
   MemberPasswordForm,
-  CreatorControls,
-  PlacesList,
-  AddPlaceForm,
-  MembersPanel,
   SpinWheel,
 } from "@/lib/components";
+
 import { PATHS } from "@/routes";
+import {
+  AddPlaceForm,
+  MembersPanel,
+  PlacesList,
+  CreatorControls,
+} from "../components/tabs";
 
 export const LandingPageContent = () => {
   const params = useParams();
   const groupId = params?.groupId as string | undefined;
   const supabase = getSupabase();
+  const { postNotice } = useNotice();
 
   const room = useGroupRoom(groupId);
   const roulette = useRoulette(
@@ -28,7 +31,7 @@ export const LandingPageContent = () => {
     room.member?.id,
     room.members.length,
     room.locations,
-    room.showNotice,
+    postNotice,
   );
 
   if (!room.configured) {
@@ -91,7 +94,6 @@ export const LandingPageContent = () => {
     return (
       <JoinGate
         group={room.group}
-        notice={room.notice}
         busy={room.busy}
         onJoin={room.handleJoinRoom}
       />
@@ -101,13 +103,11 @@ export const LandingPageContent = () => {
   if (!room.member.password_set) {
     return (
       <main className="mx-auto max-w-lg px-4 pb-24 pt-10 text-slate-900 dark:text-slate-100">
-        <Notice notice={room.notice} />
         <div className="mt-6">
           <MemberPasswordForm
             member={room.member}
             busy={room.busy}
             onSave={room.handleSetMemberPassword}
-            showNotice={room.showNotice}
           />
         </div>
       </main>
@@ -122,8 +122,6 @@ export const LandingPageContent = () => {
         membersCount={room.members.length}
         onLeave={room.handleLeaveGroup}
       />
-
-      <Notice notice={room.notice} />
 
       <TabBar active={room.tab} onChange={room.setTab} />
 
@@ -152,11 +150,7 @@ export const LandingPageContent = () => {
       )}
 
       {room.tab === "add" && (
-        <AddPlaceForm
-          busy={room.busy}
-          onAdd={room.handleAddPlace}
-          showNotice={room.showNotice}
-        />
+        <AddPlaceForm busy={room.busy} onAdd={room.handleAddPlace} />
       )}
 
       {room.tab === "settings" && (
@@ -171,7 +165,6 @@ export const LandingPageContent = () => {
               member={room.member}
               busy={room.busy}
               onSave={room.handleSetMemberPassword}
-              showNotice={room.showNotice}
               embedded
             />
             {room.isCreator ? (

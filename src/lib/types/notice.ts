@@ -1,5 +1,9 @@
 /** Notice displayed in the UI. */
-export interface INoticeType {
+export interface INotice {
   text: string;
-  isError: boolean;
+  timeout?: number;
+  variant?: NoticeVariant;
+  className?: string;
 }
+
+export type NoticeVariant = "error" | "success";

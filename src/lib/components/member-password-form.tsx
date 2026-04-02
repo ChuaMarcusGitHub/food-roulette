@@ -1,13 +1,13 @@
 import { useState, type FormEvent } from "react";
-import type { MemberPublic } from "@/types";
 import { t } from "@translate";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
+import { useNotice } from "@/lib/hooks";
+import { IMemberPublic } from "@/lib/types";
 
 interface MemberPasswordFormProps {
-  member: MemberPublic;
+  member: IMemberPublic;
   busy: boolean;
   onSave: (pw: string) => Promise<void>;
-  showNotice: (text: string, isError?: boolean) => void;
   /** When true, no outer card border (parent provides the shell). */
   embedded?: boolean;
 }
@@ -17,9 +17,9 @@ export const MemberPasswordForm = ({
   member,
   busy,
   onSave,
-  showNotice,
   embedded = false,
 }: MemberPasswordFormProps) => {
+  const { postNotice } = useNotice();
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [editing, setEditing] = useState(false);
@@ -31,11 +31,17 @@ export const MemberPasswordForm = ({
     const a = pw.trim();
     const b = pw2.trim();
     if (a.length < MIN_PASSWORD_LENGTH) {
-      showNotice(t("group.err_member_password_short"), true);
+      postNotice({
+        text: t("group.err_member_password_short"),
+        variant: "error",
+      });
       return;
     }
     if (a !== b) {
-      showNotice(t("group.member_password_mismatch"), true);
+      postNotice({
+        text: t("group.member_password_mismatch"),
+        variant: "error",
+      });
       return;
     }
     void onSave(a).then(() => {
@@ -90,10 +96,14 @@ export const MemberPasswordForm = ({
   return (
     <div className={shell}>
       <h2 className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {hasPassword ? t("group.member_password_change_title") : t("group.member_password_title")}
+        {hasPassword
+          ? t("group.member_password_change_title")
+          : t("group.member_password_title")}
       </h2>
       <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-        {hasPassword ? t("group.member_password_change_hint") : t("group.member_password_hint")}
+        {hasPassword
+          ? t("group.member_password_change_hint")
+          : t("group.member_password_hint")}
       </p>
       {!hasPassword ? (
         <p className="mt-2 rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
@@ -126,7 +136,9 @@ export const MemberPasswordForm = ({
             disabled={busy}
             className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-teal-800 dark:hover:bg-teal-700"
           >
-            {hasPassword ? t("group.member_password_update_save") : t("group.member_password_save")}
+            {hasPassword
+              ? t("group.member_password_update_save")
+              : t("group.member_password_save")}
           </button>
           {hasPassword && editing ? (
             <button

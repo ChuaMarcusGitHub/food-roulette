@@ -2,9 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, type FormEvent } from "react";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { t } from "@translate";
-import { getSupabase, isSupabaseConfigured, recoverMemberSession } from "@/lib/supabase";
+import {
+  getSupabase,
+  isSupabaseConfigured,
+  recoverMemberSession,
+} from "@/lib/supabase";
 import { useNotice } from "@/lib/hooks/use-notice";
-import { Notice } from "@/lib/components";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 
@@ -12,7 +15,7 @@ export const LandingPageContent = () => {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();
-  const { notice, showNotice } = useNotice();
+  const { postNotice } = useNotice();
 
   const [mInvite, setMInvite] = useState("");
   const [mName, setMName] = useState("");
@@ -26,20 +29,20 @@ export const LandingPageContent = () => {
     const name = mName.trim();
     const pw = mPassword.trim();
     if (code.length !== INVITE_CODE_LENGTH) {
-      showNotice(t("recover.err_invite"), true);
+      postNotice({ text: t("recover.err_invite") });
       return;
     }
     if (!name) {
-      showNotice(t("recover.err_member_name"), true);
+      postNotice({ text: t("recover.err_member_name") });
       return;
     }
     if (!pw) {
-      showNotice(t("recover.err_member_password"), true);
+      postNotice({ text: t("recover.err_member_password") });
       return;
     }
     const deviceId = getDeviceId();
     if (!deviceId) {
-      showNotice(t("common.err_device_id"), true);
+      postNotice({ text: t("common.err_device_id") });
       return;
     }
     setBusy(true);
@@ -54,10 +57,10 @@ export const LandingPageContent = () => {
       if (error) throw new Error(error);
       if (!groupId) throw new Error("Invalid response");
       setStoredGroupId(groupId);
-      showNotice(t("recover.success"), false);
+      postNotice({ text: t("recover.success"), variant: "success" });
       navigate(PATHS.GROUP.replace(":groupId", groupId), { replace: true });
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : "Error", true);
+      postNotice({ text: err instanceof Error ? err.message : "Error" });
     } finally {
       setBusy(false);
     }
@@ -92,8 +95,6 @@ export const LandingPageContent = () => {
           {t("recover.title")}
         </h1>
       </header>
-
-      <Notice notice={notice} className="mb-6" />
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">

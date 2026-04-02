@@ -7,9 +7,15 @@ import {
   generateUniqueInviteCode,
 } from "@/lib/utils";
 import { t } from "@translate";
-import { getSupabase, isSupabaseConfigured, createGroup, setGroupCreator, joinGroupByCode, setMemberPassword } from "@/lib/supabase";
+import {
+  getSupabase,
+  isSupabaseConfigured,
+  createGroup,
+  setGroupCreator,
+  joinGroupByCode,
+  setMemberPassword,
+} from "@/lib/supabase";
 import { useNotice } from "@/lib/hooks/use-notice";
-import { Notice } from "@/lib/components";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
 
@@ -17,7 +23,7 @@ export const LandingPageContent = () => {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();
-  const { notice, showNotice } = useNotice();
+  const { postNotice } = useNotice();
 
   const [newGroupName, setNewGroupName] = useState("");
   const [creatorName, setCreatorName] = useState("");
@@ -30,6 +36,10 @@ export const LandingPageContent = () => {
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  const postErrorNotice = (message: string) => {
+    postNotice({ text: message });
+  };
 
   const autoRedirect = useCallback(async () => {
     if (!supabase) return;
@@ -58,15 +68,15 @@ export const LandingPageContent = () => {
     const you = creatorName.trim();
     const pw = memberPassword.trim();
     if (!gName) {
-      showNotice(t("home.err_group_name"), true);
+      postErrorNotice(t("home.err_group_name"));
       return;
     }
     if (!you) {
-      showNotice(t("home.err_your_name"), true);
+      postErrorNotice(t("home.err_your_name"));
       return;
     }
     if (pw.length < MIN_PASSWORD_LENGTH) {
-      showNotice(t("home.err_recovery"), true);
+      postErrorNotice(t("home.err_recovery"));
       return;
     }
     setBusy(true);
@@ -106,7 +116,7 @@ export const LandingPageContent = () => {
       setStoredGroupId(group.id);
       navigate(PATHS.GROUP.replace(":groupId", group.id));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : "Error", true);
+      postErrorNotice(err instanceof Error ? err.message : "Error");
     } finally {
       setBusy(false);
     }
@@ -118,11 +128,11 @@ export const LandingPageContent = () => {
     const code = joinCode.trim().toUpperCase();
     const you = joinName.trim();
     if (code.length !== INVITE_CODE_LENGTH) {
-      showNotice(t("home.err_invite_len"), true);
+      postErrorNotice(t("home.err_invite_len"));
       return;
     }
     if (!you) {
-      showNotice(t("home.err_join_name"), true);
+      postErrorNotice(t("home.err_join_name"));
       return;
     }
     setBusy(true);
@@ -137,25 +147,28 @@ export const LandingPageContent = () => {
       );
       if (error) {
         if (/room_locked/i.test(error))
-          showNotice(t("home.err_room_locked"), true);
+          postErrorNotice(t("home.err_room_locked"));
         else if (/group_not_found|bad_invite/i.test(error))
-          showNotice(t("home.err_no_group"), true);
+          postErrorNotice(t("home.err_no_group"));
         else if (/name_taken/i.test(error))
-          showNotice(t("home.err_name_taken"), true);
+          postErrorNotice(t("home.err_name_taken"));
         else if (/empty_name/i.test(error))
-          showNotice(t("home.err_join_name"), true);
-        else showNotice(error, true);
+          postErrorNotice(t("home.err_join_name"));
+        else postErrorNotice(error);
         return;
       }
       const gid = data?.group_id;
       if (!gid) {
-        showNotice(t("home.err_no_group"), true);
+        postErrorNotice(t("home.err_no_group"));
         return;
       }
       setStoredGroupId(gid);
       navigate(PATHS.GROUP.replace(":groupId", gid));
     } catch (err: unknown) {
-      showNotice(err instanceof Error ? err.message : "Error", true);
+      postNotice({
+        text: err instanceof Error ? err.message : "Error",
+        variant: "error",
+      });
     } finally {
       setBusy(false);
     }
@@ -184,8 +197,6 @@ export const LandingPageContent = () => {
           {t("home.tagline")}
         </p>
       </header>
-
-      <Notice notice={notice} className="mb-6" />
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">

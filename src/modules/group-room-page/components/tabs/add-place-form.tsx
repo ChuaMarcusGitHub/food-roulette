@@ -5,40 +5,37 @@ import {
   isGoogleMapsShortUrl,
 } from "@/lib/utils/map-embed";
 import { t } from "@translate";
+import { useNotice } from "@/lib/hooks";
 interface AddPlaceFormProps {
   busy: boolean;
   onAdd: (name: string, url: string) => Promise<void>;
-  showNotice: (text: string, isError?: boolean) => void;
 }
 
 /** Add a place from a Google Maps URL only; name is derived from the link. */
-export const AddPlaceForm = ({
-  busy,
-  onAdd,
-  showNotice,
-}: AddPlaceFormProps) => {
+export const AddPlaceForm = ({ busy, onAdd }: AddPlaceFormProps) => {
+  const { postNotice } = useNotice();
   const [url, setUrl] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const u = url.trim();
     if (!u) {
-      showNotice(t("group.err_add_url"), true);
+      postNotice({ text: t("group.err_add_url"), variant: "error" });
       return;
     }
     let parsed: URL;
     try {
       parsed = new URL(u);
     } catch {
-      showNotice(t("group.err_url_invalid"), true);
+      postNotice({ text: t("group.err_url_invalid"), variant: "error" });
       return;
     }
     if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      showNotice(t("group.err_url_scheme"), true);
+      postNotice({ text: t("group.err_url_scheme"), variant: "error" });
       return;
     }
     if (!isGoogleMapsUrl(u)) {
-      showNotice(t("group.err_google_maps_only"), true);
+      postNotice({ text: t("group.err_google_maps_only"), variant: "error" });
       return;
     }
     let normalizedUrl = u;
