@@ -1,5 +1,4 @@
 import { IUseGroupRoomReturn } from "@/lib/hooks";
-
 import { MembersPanel } from "./members-panel";
 
 interface IMembersTabProps {

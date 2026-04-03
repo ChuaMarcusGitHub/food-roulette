@@ -1,5 +1,5 @@
 import { t } from "@translate";
-import { MapPreview } from "@/lib/components";
+import { GroupLabel, MapPreview } from "@/lib/components";
 import { useMemo, useState } from "react";
 import { ILocation } from "@/lib/types";
 import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
@@ -45,9 +45,11 @@ export const PlacesList = ({
 
   return (
     <section className="space-y-4">
-      <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {t("group.places_title_count", { count: String(locations.length) })}
-      </h2>
+      <GroupLabel
+        label={t("group.places_title_count", {
+          count: String(locations.length),
+        })}
+      />
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <input

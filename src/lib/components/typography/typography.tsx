@@ -5,16 +5,15 @@ import { HTMLAttributes } from "react";
 const textVariants = cva("", {
   variants: {
     variant: {
-      h1: "text-4xl font bold tracking-tight",
-      h2: "text-2xl font-semibold tracking-tight",
-      h3: "text-xl font-semibold",
-      title: "text-lg font-semibold",
-      body: "text-sm",
-      muted: "text-xs text-slade-500 darkLtest slade-400",
+      h1: "text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50",
+      body1: "text-sm text-slate-600 dark:text-slate-400",
+      muted: "text-xs text-slate-500 dark:text-slate-400",
+      label: "text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
+      labelSm: "text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
     },
   },
   defaultVariants: {
-    variant: "body",
+    variant: "body1",
   },
 });
 

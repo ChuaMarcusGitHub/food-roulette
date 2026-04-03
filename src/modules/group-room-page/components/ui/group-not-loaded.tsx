@@ -7,6 +7,6 @@ export const GroupNotLoaded = () => (
     <Text className="text-slate-600 dark:text-slate-400">
       {t("group.not_loaded")}
     </Text>
-    <LinkHome />
+    <LinkHome variant={"light"} />
   </div>
 );

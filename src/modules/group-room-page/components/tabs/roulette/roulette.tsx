@@ -17,10 +17,7 @@ export const RouletteTab: React.FC<IRouletteTabProps> = ({
   const { postNotice } = useNotice();
 
   return (
-    <div
-      className={room.tab === "roulette" ? "block" : "hidden"}
-      aria-hidden={room.tab !== "roulette"}
-    >
+    <span data-testid={"roulette-tab"}>
       <button onClick={() => postNotice({ text: "potato" })}> Hi</button>
       <SpinWheel
         {...roulette}
@@ -28,6 +25,6 @@ export const RouletteTab: React.FC<IRouletteTabProps> = ({
         membersCount={room.members.length}
         addTabLabel={t("group.tabs.add")}
       />
-    </div>
+    </span>
   );
 };

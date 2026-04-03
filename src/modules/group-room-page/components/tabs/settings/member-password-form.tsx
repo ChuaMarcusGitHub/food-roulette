@@ -3,6 +3,7 @@ import { t } from "@translate";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
 import { useNotice } from "@/lib/hooks";
 import { IMemberPublic } from "@/lib/types";
+import { Text } from "@/lib/components";
 
 interface MemberPasswordFormProps {
   member: IMemberPublic;
@@ -95,11 +96,12 @@ export const MemberPasswordForm = ({
 
   return (
     <div className={shell}>
-      <h2 className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+      <Text variant={"labelSm"}>
         {hasPassword
           ? t("group.member_password_change_title")
           : t("group.member_password_title")}
-      </h2>
+      </Text>
+
       <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
         {hasPassword
           ? t("group.member_password_change_hint")

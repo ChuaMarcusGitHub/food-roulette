@@ -7,6 +7,6 @@ export const MissingGroup = () => (
     <Text className={"text-slate-600 dark:text-slate-400"}>
       {t("group.missing_group")}
     </Text>
-    <LinkHome />
+    <LinkHome variant={'light'}/>
   </div>
 );

@@ -2,7 +2,7 @@ import type { IUseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
-import { MapPreview } from "@/lib/components";
+import { MapPreview, Text } from "@/lib/components";
 import { SpinProgressRing } from "./spin-progress-ring";
 import { placeLabel } from "./utils/place-label";
 import { getDomainLabel } from "./utils/get-domain-label";
@@ -46,9 +46,8 @@ export const SpinWheel = ({
         {phase !== "result" ? (
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                {t("common.app_name")}
-              </p>
+              <Text variant={"labelSm"}>{t("common.app_name")}</Text>
+
               <p className="mt-1 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 {t("roulette.sync_hint")}
               </p>
@@ -69,9 +68,8 @@ export const SpinWheel = ({
             <div className="relative aspect-square max-h-[min(72vw,20rem)] w-full max-w-[20rem] mx-auto">
               <SpinProgressRing progress={spinProgress} />
               <div className="absolute inset-[12%] flex flex-col items-center justify-center text-center">
-                <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                  {t("roulette.picking")}
-                </p>
+                <Text variant={'labelSm'}>{t("roulette.picking")}</Text>
+
                 <p
                   key={showingLoc.id + String(spinningContext?.index ?? 0)}
                   className="mt-3 line-clamp-3 px-2 text-xl font-semibold leading-snug text-slate-900 dark:text-slate-100 sm:text-2xl"
@@ -99,9 +97,9 @@ export const SpinWheel = ({
               </div>
             ) : null}
 
-            <p className="mt-3 truncate text-center text-xs text-slate-500 dark:text-slate-400">
+            <Text variant={"muted"} className={"mt-3 truncate text-center "}>
               {showingLoc.url}
-            </p>
+            </Text>
           </div>
         )}
 
@@ -114,9 +112,8 @@ export const SpinWheel = ({
               {placeLabel(winnerLoc, t("roulette.place_fallback"))}
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                {getDomainLabel(winnerLoc.url)}
-              </p>
+              <Text variant={"muted"}>{getDomainLabel(winnerLoc.url)}</Text>
+
               <div className="flex flex-wrap gap-2">
                 <a
                   href={winnerLoc.url}

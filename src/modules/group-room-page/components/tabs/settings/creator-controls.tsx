@@ -1,6 +1,7 @@
 import { type FormEvent } from "react";
 import { t } from "@translate";
 import { IGroup } from "@/lib/types";
+import { Text } from "@/lib/components";
 
 interface CreatorControlsProps {
   group: IGroup;
@@ -25,7 +26,6 @@ export const CreatorControls = ({
   onToggleLock,
   embedded = false,
 }: CreatorControlsProps) => {
-
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const code = inviteDraft.trim().toUpperCase();
@@ -38,30 +38,54 @@ export const CreatorControls = ({
 
   return (
     <div className={wrap}>
-      <h2 className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {t("group.creator_invite")}
-      </h2>
-      <form onSubmit={handleSubmit} className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end">
-        <input type="text" maxLength={6} value={inviteDraft}
-          onChange={(e) => setInviteDraft(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
+      <Text variant={"labelSm"}>{t("group.creator_invite")}</Text>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end"
+      >
+        <input
+          type="text"
+          maxLength={6}
+          value={inviteDraft}
+          onChange={(e) =>
+            setInviteDraft(
+              e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""),
+            )
+          }
           className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 font-mono tracking-widest sm:max-w-[10rem] dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-          disabled={busy} />
+          disabled={busy}
+        />
         <div className="flex flex-wrap gap-2">
-          <button type="submit" disabled={busy} className="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50 dark:hover:bg-teal-500">
+          <button
+            type="submit"
+            disabled={busy}
+            className="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50 dark:hover:bg-teal-500"
+          >
             {t("group.save_code")}
           </button>
-          <button type="button" disabled={busy} onClick={() => void onRandomize()}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700">
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void onRandomize()}
+            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+          >
             {t("group.randomize")}
           </button>
         </div>
       </form>
       <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-slate-700 dark:text-slate-300">
-        <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-600 dark:border-slate-600 dark:bg-slate-950"
-          checked={Boolean(group.join_locked)} onChange={() => void onToggleLock()} disabled={busy} />
+        <input
+          type="checkbox"
+          className="mt-0.5 h-4 w-4 rounded border-slate-300 text-teal-600 focus:ring-teal-600 dark:border-slate-600 dark:bg-slate-950"
+          checked={Boolean(group.join_locked)}
+          onChange={() => void onToggleLock()}
+          disabled={busy}
+        />
         <span>
           <span className="font-medium">{t("group.join_locked_label")}</span>
-          <span className="mt-1 block text-xs font-normal text-slate-500 dark:text-slate-400">{t("group.join_locked_help")}</span>
+          <span className="mt-1 block text-xs font-normal text-slate-500 dark:text-slate-400">
+            {t("group.join_locked_help")}
+          </span>
         </span>
       </label>
     </div>

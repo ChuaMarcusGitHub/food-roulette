@@ -1,15 +1,19 @@
 import { useParams } from "react-router-dom";
 import { getSupabase } from "@/lib/supabase/client";
 import { useGroupRoom, useNotice, useRoulette } from "@/lib/hooks";
-import { TabBar, GroupHeader, MemberPasswordForm } from "@/lib/components";
-import { UnconfiguredEnv } from "@/lib/components/pages";
+import {
+  TabBar,
+  GroupHeader,
+  MemberPasswordForm,
+  UnconfiguredEnv,
+} from "@/lib/components";
 import {
   GroupNotLoaded,
   LoadingGroup,
   MissingGroup,
   JoinGate,
 } from "../components/ui";
-import { GroupTabs } from "../components/tabs/group-tabs";
+import { GroupTabs } from "../components/tabs";
 
 export const LandingPageContent = () => {
   const params = useParams();

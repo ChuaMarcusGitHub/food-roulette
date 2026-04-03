@@ -10,6 +10,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
+import { GroupLabel, Text } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -69,9 +70,7 @@ export const LandingPageContent = () => {
   if (!configured) {
     return (
       <>
-        <p className="text-slate-600 dark:text-slate-400">
-          {t("group.configure_env")}
-        </p>
+        <Text variant={"body1"}> {t("group.configure_env")}</Text>
         <Link
           to={PATHS.HOME}
           className="mt-4 inline-block text-teal-600 dark:text-teal-400"
@@ -97,9 +96,7 @@ export const LandingPageContent = () => {
       </header>
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {t("recover.member_section")}
-        </h2>
+        <GroupLabel label={t("recover.member_section")} />
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
           {t("recover.member_subtitle")}
         </p>
@@ -107,9 +104,9 @@ export const LandingPageContent = () => {
           onSubmit={handleMemberSubmit}
           className="mt-4 flex flex-col gap-3"
         >
-          <label className="block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <Text variant={"labelSm"} className={"block"}>
             {t("recover.invite_ph")}
-          </label>
+          </Text>
           <input
             type="text"
             value={mInvite}
@@ -118,9 +115,9 @@ export const LandingPageContent = () => {
             className="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono tracking-widest dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
-          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <Text variant={"labelSm"} className={"mt-1 block"}>
             {t("recover.name_ph")}
-          </label>
+          </Text>
           <input
             type="text"
             value={mName}
@@ -128,9 +125,9 @@ export const LandingPageContent = () => {
             className="w-full rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
-          <label className="mt-1 block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <Text variant={"labelSm"} className={"mt-1 block"}>
             {t("recover.member_password_ph")}
-          </label>
+          </Text>
           <input
             type="password"
             autoComplete="new-password"

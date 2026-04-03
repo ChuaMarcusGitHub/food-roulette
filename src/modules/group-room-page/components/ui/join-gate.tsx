@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
 import { IGroup } from "@/lib/types";
+import { GroupLabel } from "@/lib/components";
 
 interface JoinGateProps {
   group: IGroup;
@@ -23,7 +24,7 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
   }
 
   return (
-    <main className="mx-auto max-w-lg px-4 py-10 pb-16 dark:text-slate-200">
+    <div className="mx-auto max-w-lg px-4 py-10 pb-16 dark:text-slate-200">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <Link
           to={PATHS.HOME}
@@ -60,9 +61,7 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
       ) : null}
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {t("group.join_your_name")}
-        </h2>
+        <GroupLabel label={t("group.join_your_name")} />
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           {t("group.join_hint")}
         </p>
@@ -87,6 +86,6 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
           </button>
         </form>
       </section>
-    </main>
+    </div>
   );
 };

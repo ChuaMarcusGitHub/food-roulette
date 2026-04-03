@@ -1,5 +1,5 @@
-import type { GroupTab } from "@/types";
 import { t } from "@translate";
+import { GroupTab } from "../types";
 
 interface TabDef {
   id: GroupTab;

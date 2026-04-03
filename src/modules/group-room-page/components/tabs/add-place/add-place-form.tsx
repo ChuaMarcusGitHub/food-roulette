@@ -6,12 +6,16 @@ import {
 } from "@/lib/utils/map-embed";
 import { t } from "@translate";
 import { useNotice } from "@/lib/hooks";
+import { GroupLabel } from "@/lib/components/typography/group-title";
 interface IAddPlaceFormProps {
   busy: boolean;
   handleAddPlace: (name: string, url: string) => Promise<void>;
 }
 
-export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({ busy, handleAddPlace }) => {
+export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
+  busy,
+  handleAddPlace,
+}) => {
   const { postNotice } = useNotice();
   const [url, setUrl] = useState("");
 
@@ -65,9 +69,7 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({ busy, handleAddPlac
 
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-      <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {t("group.add_title_google")}
-      </h2>
+      <GroupLabel label={t("group.add_title_google")} />
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         {t("group.add_hint_google_only")}
       </p>

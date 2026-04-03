@@ -1,7 +1,7 @@
-import type { Location } from "@/types";
+import { ILocation } from "@/lib/types";
 
 export const placeLabel = (
-  loc: Location | undefined,
+  loc: ILocation | undefined,
   fallback: string,
 ): string => {
   return loc?.name?.trim() || fallback;

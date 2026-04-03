@@ -18,6 +18,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
+import { GroupLabel, Text } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -190,18 +191,14 @@ export const LandingPageContent = () => {
   return (
     <>
       <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-700">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-          {t("common.app_name")}
-        </h1>
+        <Text variant={"h1"}>{t("common.app_name")}</Text>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           {t("home.tagline")}
         </p>
       </header>
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {t("home.create_title")}
-        </h2>
+        <GroupLabel label={t("home.create_title")} />
         <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
           {t("home.retention_warning")}
         </p>
@@ -245,9 +242,7 @@ export const LandingPageContent = () => {
       </section>
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
-        <h2 className="text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-          {t("home.join_title")}
-        </h2>
+        <GroupLabel label={t("home.join_title")} />
         <form onSubmit={handleJoinGroup} className="mt-3 flex flex-col gap-3">
           <input
             type="text"
