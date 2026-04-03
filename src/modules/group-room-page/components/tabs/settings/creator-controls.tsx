@@ -1,9 +1,9 @@
 import { type FormEvent } from "react";
-import type { Group } from "@/types";
 import { t } from "@translate";
+import { IGroup } from "@/lib/types";
 
 interface CreatorControlsProps {
-  group: Group;
+  group: IGroup;
   inviteDraft: string;
   setInviteDraft: (s: string) => void;
   busy: boolean;

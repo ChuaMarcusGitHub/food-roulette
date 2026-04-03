@@ -176,19 +176,19 @@ export const LandingPageContent = () => {
 
   if (!configured) {
     return (
-      <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
+      <>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
           {t("common.app_name")}
         </h1>
         <p className="mt-3 text-slate-600 dark:text-slate-400">
           {t("home.err_env")}
         </p>
-      </main>
+      </>
     );
   }
 
   return (
-    <main className="">
+    <>
       <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-700">
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
           {t("common.app_name")}
@@ -287,6 +287,6 @@ export const LandingPageContent = () => {
       <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">
         {t("home.auto_redirect")}
       </p>
-    </main>
+    </>
   );
 };

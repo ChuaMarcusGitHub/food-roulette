@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
 
@@ -7,20 +7,6 @@ import { t } from "@translate";
 export const AppToolbar = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const { locale, onLocaleChange } = useContext(LocaleContext)!;
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div
-        className="fixed right-3 top-3 z-[100] h-9 w-32 rounded-lg bg-transparent"
-        aria-hidden
-      />
-    );
-  }
 
   const dark = resolvedTheme === "dark";
 

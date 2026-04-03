@@ -1,4 +1,4 @@
-import type { UseRouletteReturn } from "@/lib/hooks/use-roulette";
+import type { IUseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
@@ -8,7 +8,7 @@ import { placeLabel } from "./utils/place-label";
 import { getDomainLabel } from "./utils/get-domain-label";
 import { ILocation } from "@/lib/types";
 
-interface SpinWheelProps extends UseRouletteReturn {
+interface SpinWheelProps extends IUseRouletteReturn {
   locations: ILocation[];
   membersCount: number;
   addTabLabel: string;

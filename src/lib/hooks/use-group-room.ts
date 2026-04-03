@@ -30,7 +30,7 @@ import { useNotice } from "./use-notice";
 import { PATHS } from "@/routes";
 import { GroupTab, IGroup, ILocation, IMemberPublic } from "../types";
 
-export interface UseGroupRoomReturn {
+export interface IUseGroupRoomReturn {
   // state
   configured: boolean;
   group: IGroup | null;
@@ -63,7 +63,7 @@ export interface UseGroupRoomReturn {
 }
 
 /** All data, subscriptions, and actions for a group room. */
-export function useGroupRoom(groupId: string | undefined): UseGroupRoomReturn {
+export function useGroupRoom(groupId: string | undefined): IUseGroupRoomReturn {
   const navigate = useNavigate();
   const supabase = getSupabase();
   const configured = isSupabaseConfigured();

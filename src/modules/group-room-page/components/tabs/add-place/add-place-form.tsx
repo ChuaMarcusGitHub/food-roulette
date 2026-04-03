@@ -6,13 +6,12 @@ import {
 } from "@/lib/utils/map-embed";
 import { t } from "@translate";
 import { useNotice } from "@/lib/hooks";
-interface AddPlaceFormProps {
+interface IAddPlaceFormProps {
   busy: boolean;
-  onAdd: (name: string, url: string) => Promise<void>;
+  handleAddPlace: (name: string, url: string) => Promise<void>;
 }
 
-/** Add a place from a Google Maps URL only; name is derived from the link. */
-export const AddPlaceForm = ({ busy, onAdd }: AddPlaceFormProps) => {
+export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({ busy, handleAddPlace }) => {
   const { postNotice } = useNotice();
   const [url, setUrl] = useState("");
 
@@ -57,7 +56,7 @@ export const AddPlaceForm = ({ busy, onAdd }: AddPlaceFormProps) => {
     }
 
     const name = derivePlaceNameFromGoogleMapsUrl(normalizedUrl);
-    void onAdd(name, normalizedUrl).then(() => {
+    void handleAddPlace(name, normalizedUrl).then(() => {
       setUrl("");
     });
   }

@@ -23,7 +23,7 @@ export interface SpinningContext {
   total: number;
 }
 
-export interface UseRouletteReturn {
+export interface IUseRouletteReturn {
   phase: Phase;
   showingLoc: ILocation | undefined;
   winnerLoc: ILocation | undefined;
@@ -45,7 +45,7 @@ export function useRoulette(
   membersCount: number,
   locations: ILocation[],
   onNotice: (notice: INotice) => void,
-): UseRouletteReturn {
+): IUseRouletteReturn {
   const [activeRun, setActiveRun] = useState<INormalisedRun | null>(null);
   const [tickIndex, setTickIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("idle");

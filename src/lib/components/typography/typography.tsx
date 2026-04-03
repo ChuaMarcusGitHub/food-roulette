@@ -22,6 +22,7 @@ interface ITextProps
   extends
     HTMLAttributes<HTMLParagraphElement>,
     VariantProps<typeof textVariants> {}
+    
 export const Text = ({ variant, className, ...props }: ITextProps) => (
   <p className={cn(textVariants({ variant }), className)} {...props} />
 );

@@ -1,34 +1,23 @@
-import type { Location } from "@/types";
 import { t } from "@translate";
 import { MapPreview } from "@/lib/components";
 import { useMemo, useState } from "react";
+import { ILocation } from "@/lib/types";
+import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
 
-interface PlacesListProps {
-  locations: Location[];
+interface IPlacesListProps {
+  locations: ILocation[];
   memberNameById: Record<string, string>;
   isCreator: boolean;
   busy: boolean;
-  onRemovePlace: (locationId: string) => Promise<void>;
+  handleRemovePlace: (locationId: string) => Promise<void>;
 }
-
-function getDomainLabel(rawUrl: string): string {
-  try {
-    const u = new URL(rawUrl);
-    const host = u.hostname.replace(/^www\./, "");
-    return host || rawUrl;
-  } catch {
-    return rawUrl;
-  }
-}
-
-/** All places tab content. */
 export const PlacesList = ({
   locations,
   memberNameById,
   isCreator,
   busy,
-  onRemovePlace,
-}: PlacesListProps) => {
+  handleRemovePlace,
+}: IPlacesListProps) => {
   const [query, setQuery] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const PAGE_SIZE = 8;
@@ -152,7 +141,7 @@ export const PlacesList = ({
                               !window.confirm(t("group.confirm_remove_place"))
                             )
                               return;
-                            void onRemovePlace(loc.id);
+                            void handleRemovePlace(loc.id);
                           }}
                           className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950"
                         >

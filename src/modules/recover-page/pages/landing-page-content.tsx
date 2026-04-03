@@ -68,7 +68,7 @@ export const LandingPageContent = () => {
 
   if (!configured) {
     return (
-      <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
+      <>
         <p className="text-slate-600 dark:text-slate-400">
           {t("group.configure_env")}
         </p>
@@ -78,12 +78,12 @@ export const LandingPageContent = () => {
         >
           {t("common.back_home")}
         </Link>
-      </main>
+      </>
     );
   }
 
   return (
-    <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
+    <>
       <Link
         to={PATHS.HOME}
         className="text-sm text-slate-500 underline dark:text-slate-400"
@@ -148,6 +148,6 @@ export const LandingPageContent = () => {
           </button>
         </form>
       </section>
-    </main>
+    </>
   );
 };

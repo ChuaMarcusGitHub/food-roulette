@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
-import { IGroup } from "../types";
+import { IGroup } from "@/lib/types";
 
 interface JoinGateProps {
   group: IGroup;
