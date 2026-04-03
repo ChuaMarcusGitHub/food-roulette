@@ -187,6 +187,7 @@ export const LandingPageContent = () => {
         className={room.tab === "roulette" ? "block" : "hidden"}
         aria-hidden={room.tab !== "roulette"}
       >
+        <button onClick={() => postNotice({ text: "potato" })}> Hi</button>
         <SpinWheel
           {...roulette}
           locations={room.locations}

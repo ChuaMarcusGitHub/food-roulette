@@ -188,7 +188,7 @@ export const LandingPageContent = () => {
   }
 
   return (
-    <main className="mx-auto max-w-lg px-4 pb-16 pt-14">
+    <main className="">
       <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-700">
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
           {t("common.app_name")}

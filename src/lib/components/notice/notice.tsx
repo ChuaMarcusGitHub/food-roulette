@@ -1,6 +1,13 @@
 import { useNotice } from "@/lib/hooks";
-import { NoticeVariant } from "@/lib/types";
+import {
+  INotice,
+  ITransitionProps,
+  NoticeVariant,
+  Transitions,
+} from "@/lib/types";
 import { cn } from "@/lib/utils/cn";
+import { Transition } from "@headlessui/react";
+import { useState } from "react";
 
 const variantClasses: Record<NoticeVariant, string> = {
   error:
@@ -8,22 +15,39 @@ const variantClasses: Record<NoticeVariant, string> = {
   success:
     "border-teal-200 bg-teal-50 text-teal-900 dark:border-teal-800 dark:bg-teal-950/40 dark:text-teal-100",
 };
+const transitionClasses: Record<Transitions, ITransitionProps> = {
+  fade: {
+    enter: "transition-opacity duration-200",
+    enterFrom: "opacity-0",
+    enterTo: "opacity-100",
+    leave: "transition-opacity duration-200",
+    leaveFrom: "opacity-100",
+    leaveTo: "opacity-0",
+  },
+};
+
 export const Notice = () => {
   const { notice } = useNotice();
-  if (!notice) return null;
+  const [_notice, setNotice] = useState<INotice | null>(null);
 
-  const { text, variant = "error", className = "" } = notice;
-  
+  if (notice && notice !== _notice) {
+    setNotice(notice);
+  }
   return (
-    <div
-      role="status"
-      className={cn([
-        "rounded-lg border px-3 py-2 text-sm mt-6",
-        variantClasses[variant],
-        className,
-      ])}
+    <Transition
+      show={notice !== null}
+      {...transitionClasses[_notice?.transition ?? "fade"]}
     >
-      {text}
-    </div>
+      <div
+        role="status"
+        className={cn([
+          "rounded-lg border px-3 py-2 text-sm mt-6",
+          variantClasses[_notice?.variant ?? "success"],
+          _notice?.className,
+        ])}
+      >
+        {_notice?.text}
+      </div>
+    </Transition>
   );
 };
