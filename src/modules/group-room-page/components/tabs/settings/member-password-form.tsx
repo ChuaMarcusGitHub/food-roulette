@@ -102,11 +102,11 @@ export const MemberPasswordForm = ({
           : t("group.member_password_title")}
       </Text>
 
-      <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+      <Text className="mt-1">
         {hasPassword
           ? t("group.member_password_change_hint")
           : t("group.member_password_hint")}
-      </p>
+      </Text>
       {!hasPassword ? (
         <p className="mt-2 rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
           {t("group.member_password_remember_warn")}

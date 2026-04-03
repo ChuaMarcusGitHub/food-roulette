@@ -97,9 +97,7 @@ export const LandingPageContent = () => {
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <GroupLabel label={t("recover.member_section")} />
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-          {t("recover.member_subtitle")}
-        </p>
+        <Text className="mt-2">{t("recover.member_subtitle")}</Text>
         <form
           onSubmit={handleMemberSubmit}
           className="mt-4 flex flex-col gap-3"

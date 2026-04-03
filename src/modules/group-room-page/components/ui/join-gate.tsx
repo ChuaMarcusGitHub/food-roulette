@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
 import { IGroup } from "@/lib/types";
-import { GroupLabel } from "@/lib/components";
+import { GroupLabel, Text } from "@/lib/components";
 
 interface JoinGateProps {
   group: IGroup;
@@ -45,12 +45,12 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
           {t("group.join_gate_title", { name: group.name ?? "" })}
         </h1>
         {group.invite_code ? (
-          <p className="mt-2 font-mono text-sm text-slate-600 dark:text-slate-400">
+          <Text className="mt-2 font-mono">
             {t("group.join_code")}{" "}
             <span className="font-semibold text-teal-800 dark:text-teal-400">
               {group.invite_code}
             </span>
-          </p>
+          </Text>
         ) : null}
       </header>
 

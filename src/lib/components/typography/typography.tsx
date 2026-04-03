@@ -7,9 +7,12 @@ const textVariants = cva("", {
     variant: {
       h1: "text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50",
       body1: "text-sm text-slate-600 dark:text-slate-400",
+      body2: "text-sm font-semibold text-slate-900 dark:text-slate-100",
       muted: "text-xs text-slate-500 dark:text-slate-400",
-      label: "text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
-      labelSm: "text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
+      label:
+        "text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
+      labelSm:
+        "text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400",
     },
   },
   defaultVariants: {
@@ -21,7 +24,7 @@ interface ITextProps
   extends
     HTMLAttributes<HTMLParagraphElement>,
     VariantProps<typeof textVariants> {}
-    
+
 export const Text = ({ variant, className, ...props }: ITextProps) => (
   <p className={cn(textVariants({ variant }), className)} {...props} />
 );

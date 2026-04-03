@@ -178,12 +178,8 @@ export const LandingPageContent = () => {
   if (!configured) {
     return (
       <>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          {t("common.app_name")}
-        </h1>
-        <p className="mt-3 text-slate-600 dark:text-slate-400">
-          {t("home.err_env")}
-        </p>
+        <Text variant={"h1"}>{t("common.app_name")}</Text>
+        <Text className="mt-3">{t("home.err_env")}</Text>
       </>
     );
   }
@@ -199,9 +195,7 @@ export const LandingPageContent = () => {
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <GroupLabel label={t("home.create_title")} />
-        <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
-          {t("home.retention_warning")}
-        </p>
+        <Text className="mt-2">{t("home.retention_warning")}</Text>
         <form onSubmit={handleCreateGroup} className="mt-3 flex flex-col gap-3">
           <input
             type="text"
@@ -228,9 +222,7 @@ export const LandingPageContent = () => {
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
-          <p className="text-xs text-slate-600 dark:text-slate-400">
-            {t("home.recovery_hint")}
-          </p>
+          <Text variant={"muted"}>{t("home.recovery_hint")}</Text>
           <button
             type="submit"
             disabled={busy}

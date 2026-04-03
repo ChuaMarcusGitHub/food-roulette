@@ -1,5 +1,5 @@
 import { t } from "@translate";
-import { GroupLabel, MapPreview } from "@/lib/components";
+import { GroupLabel, MapPreview, Text } from "@/lib/components";
 import { useMemo, useState } from "react";
 import { ILocation } from "@/lib/types";
 import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
@@ -63,19 +63,19 @@ export const PlacesList = ({
           placeholder="Search places…"
           className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 sm:max-w-sm"
         />
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <Text variant={"muted"}>
           {filtered.length === locations.length ? null : (
-            <span>
+            <>
               {filtered.length} / {locations.length}
-            </span>
+            </>
           )}
-        </p>
+        </Text>
       </div>
 
       {locations.length === 0 ? (
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <Text variant={"muted"}>
           {t("group.places_empty_tab", { tabName: t("group.tabs.add") })}
-        </p>
+        </Text>
       ) : (
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
           <ul className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -99,10 +99,13 @@ export const PlacesList = ({
                       }
                       className="min-w-0 flex-1 text-left"
                     >
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+                      <Text variant={"body2"} className="truncate">
                         {label}
-                      </p>
-                      <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
+                      </Text>
+                      <Text
+                        variant={"muted"}
+                        className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1"
+                      >
                         <span className="truncate">{domain}</span>
                         <span
                           aria-hidden
@@ -113,7 +116,7 @@ export const PlacesList = ({
                         <span className="truncate">
                           {t("group.add_by")} {addedBy}
                         </span>
-                      </p>
+                      </Text>
                     </button>
 
                     <div className="flex shrink-0 flex-wrap items-center gap-2">
@@ -183,13 +186,13 @@ export const PlacesList = ({
             Prev
           </button>
 
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Page{" "}
+          <Text>
+            Page
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {safePage}
-            </span>{" "}
+            </span>
             / {totalPages}
-          </p>
+          </Text>
 
           <button
             type="button"

@@ -47,10 +47,9 @@ export const SpinWheel = ({
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <Text variant={"labelSm"}>{t("common.app_name")}</Text>
-
-              <p className="mt-1 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <Text className="mt-1 max-w-md leading-relaxed">
                 {t("roulette.sync_hint")}
-              </p>
+              </Text>
             </div>
             <button
               type="button"
@@ -68,7 +67,7 @@ export const SpinWheel = ({
             <div className="relative aspect-square max-h-[min(72vw,20rem)] w-full max-w-[20rem] mx-auto">
               <SpinProgressRing progress={spinProgress} />
               <div className="absolute inset-[12%] flex flex-col items-center justify-center text-center">
-                <Text variant={'labelSm'}>{t("roulette.picking")}</Text>
+                <Text variant={"labelSm"}>{t("roulette.picking")}</Text>
 
                 <p
                   key={showingLoc.id + String(spinningContext?.index ?? 0)}
@@ -142,12 +141,13 @@ export const SpinWheel = ({
 
             <div className="mt-5 rounded-lg border border-slate-200 bg-white/60 p-4 dark:border-slate-600 dark:bg-slate-900/30">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  {t("roulette.vote_line")}{" "}
+                <Text>
+                  {t("roulette.vote_line")}
                   <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {votes.length}
                   </span>
                   {locale === "jp" ? (
+                    // TODO: Fix Localization
                     <> / {membersCount}人</>
                   ) : (
                     <> / {membersCount} members</>
@@ -157,11 +157,12 @@ export const SpinWheel = ({
                       {t("roulette.majority")}
                     </span>
                   ) : null}
-                </p>
+                </Text>
                 {majorityNeed > 0 ? (
                   <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                     {locale === "jp"
-                      ? `過半数: ${majorityNeed}票`
+                      ? // TODO: Fix Localization
+                        `過半数: ${majorityNeed}票`
                       : `Majority: ${majorityNeed} votes`}
                   </span>
                 ) : null}
@@ -182,9 +183,9 @@ export const SpinWheel = ({
               >
                 {voted ? t("roulette.voted") : t("roulette.vote_btn")}
               </button>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              <Text variant={"muted"} className={"mt-2"}>
                 {t("roulette.vote_hint")}
-              </p>
+              </Text>
             </div>
           </div>
         )}
@@ -192,9 +193,9 @@ export const SpinWheel = ({
         {phase === "idle" && !locations.length && (
           <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-800/30">
             <p className="text-3xl">🍽️</p>
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+            <Text className={"mt-3"}>
               {t("roulette.add_places_first", { tabName: addTabLabel })}
-            </p>
+            </Text>
           </div>
         )}
       </div>
