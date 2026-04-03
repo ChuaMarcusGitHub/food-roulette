@@ -1,4 +1,4 @@
-export type Transitions = "fade";
+export type Transitions = "fade" | "slideDown";
 
 export interface ITransitionProps {
   enter: string;

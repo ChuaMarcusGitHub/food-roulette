@@ -11,9 +11,9 @@ import { useState } from "react";
 
 const variantClasses: Record<NoticeVariant, string> = {
   error:
-    "border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200",
+    "border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/90 dark:text-red-200",
   success:
-    "border-teal-200 bg-teal-50 text-teal-900 dark:border-teal-800 dark:bg-teal-950/40 dark:text-teal-100",
+    "border-teal-200 bg-teal-50 text-teal-900 dark:border-teal-800 dark:bg-teal-950/90 dark:text-teal-100",
 };
 const transitionClasses: Record<Transitions, ITransitionProps> = {
   fade: {
@@ -23,6 +23,14 @@ const transitionClasses: Record<Transitions, ITransitionProps> = {
     leave: "transition-opacity duration-200",
     leaveFrom: "opacity-100",
     leaveTo: "opacity-0",
+  },
+  slideDown: {
+    enter: "transition-all duration-200",
+    enterFrom: "opacity-0 -translate-y-2",
+    enterTo: "opacity-100 translate-y-0",
+    leave: "transition-all duration-200",
+    leaveFrom: "opacity-100 translate-y-0",
+    leaveTo: "opacity-0 -translate-y-2",
   },
 };
 
@@ -36,14 +44,14 @@ export const Notice = () => {
   return (
     <Transition
       show={notice !== null}
-      {...transitionClasses[_notice?.transition ?? "fade"]}
+      {...transitionClasses[_notice?.transition ?? "slideDown"]}
     >
       <div
         role="status"
         className={cn([
-          "rounded-lg border px-3 py-2 text-sm mt-6",
+          "fixed top-16 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 px-4",
+          "rounded-lg border py-2 text-sm shadow-md",
           variantClasses[_notice?.variant ?? "success"],
-          _notice?.className,
         ])}
       >
         {_notice?.text}

@@ -4,5 +4,5 @@ export const BROWSER_LANGUAGE_KEY = "lunch-randomizer-locale";
 
 export const INVITE_CODE_LENGTH = 6;
 export const MIN_PASSWORD_LENGTH = 4;
-export const NOTICE_TIMEOUT_MS = 5_000;
+export const NOTICE_TIMEOUT_MS = 2000;
 export const DEFAULT_TICK_MS = 110;
