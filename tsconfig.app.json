@@ -25,7 +25,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@translate": ["./src/lib/i18n/translate.ts"]
+      "@/*": ["./src/*"],
+      "@pages": ["./src/pages/index.ts"],
+      "@translate": ["./src/lib/i18n/translate.ts"],
+      "@routes": ["./src/routes/index.ts"]
     }
   },
   "include": ["src"]

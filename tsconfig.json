@@ -14,7 +14,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@translate": ["./src/lib/i18n/translate.ts"]
+      "@pages": ["./src/pages/index.ts"],
+      "@translate": ["./src/lib/i18n/translate.ts"],
+      "@routes": ["./src/routes/index.ts"],
+      "@style/*": ["./src/lib/styles/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
