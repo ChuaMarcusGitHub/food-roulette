@@ -6,7 +6,7 @@ import {
 } from "@/lib/utils/map-embed";
 import { t } from "@translate";
 import { useNotice } from "@/lib/hooks";
-import { GroupLabel } from "@/lib/components/typography/group-title";
+import { Button, GroupLabel } from "@/lib/components";
 interface IAddPlaceFormProps {
   busy: boolean;
   handleAddPlace: (name: string, url: string) => Promise<void>;
@@ -102,13 +102,9 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
             disabled={busy}
           />
         </div>
-        <button
-          type="submit"
-          disabled={busy}
-          className="rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-teal-700 dark:hover:bg-teal-600"
-        >
+        <Button type={"submit"} intent={"submit"} disabled={busy}>
           {t("group.save_place")}
-        </button>
+        </Button>
       </form>
     </section>
   );

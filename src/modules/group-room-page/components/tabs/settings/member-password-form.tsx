@@ -3,7 +3,7 @@ import { t } from "@translate";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
 import { useNotice } from "@/lib/hooks";
 import { IMemberPublic } from "@/lib/types";
-import { Text } from "@/lib/components";
+import { Button, Text } from "@/lib/components";
 
 interface MemberPasswordFormProps {
   member: IMemberPublic;
@@ -82,13 +82,9 @@ export const MemberPasswordForm = ({
               </p>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-          >
+          <Button intent={"ghost"} className={"shrink-0"} onClick={() => setEditing(true)}>
             {t("group.member_password_change_cta")}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -133,24 +129,15 @@ export const MemberPasswordForm = ({
           disabled={busy}
         />
         <div className="flex flex-wrap gap-2">
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-teal-800 dark:hover:bg-teal-700"
-          >
+          <Button type={"submit"} intent={"submit"} disabled={busy}>
             {hasPassword
               ? t("group.member_password_update_save")
               : t("group.member_password_save")}
-          </button>
+          </Button>
           {hasPassword && editing ? (
-            <button
-              type="button"
-              disabled={busy}
-              onClick={handleCancel}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
-            >
+            <Button intent={"ghost"} disabled={busy} onClick={handleCancel}>
               {t("group.member_password_cancel")}
-            </button>
+            </Button>
           ) : null}
         </div>
       </form>

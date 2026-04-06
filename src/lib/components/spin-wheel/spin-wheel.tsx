@@ -2,7 +2,7 @@ import type { IUseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
-import { MapPreview, Text } from "@/lib/components";
+import { Button, MapPreview, Text } from "@/lib/components";
 import { SpinProgressRing } from "./spin-progress-ring";
 import { placeLabel } from "./utils/place-label";
 import { getDomainLabel } from "./utils/get-domain-label";
@@ -51,14 +51,14 @@ export const SpinWheel = ({
                 {t("roulette.sync_hint")}
               </Text>
             </div>
-            <button
-              type="button"
-              onClick={() => void handleStartRoulette()}
+            <Button
+              intent={"primary"}
               disabled={!canSpin}
-              className="shrink-0 rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:focus-visible:ring-offset-slate-900"
+              className={"shrink-0 px-5 font-semibold"}
+              onClick={() => handleStartRoulette()}
             >
               {t("roulette.start")}
-            </button>
+            </Button>
           </div>
         ) : null}
 
@@ -122,15 +122,13 @@ export const SpinWheel = ({
                 >
                   Open
                 </a>
-                <button
-                  type="button"
-                  onClick={() => {
-                    void navigator.clipboard?.writeText(winnerLoc.url);
-                  }}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                <Button
+                  intent={"ghost"}
+                  size={"sm"}
+                  onClick={() => navigator.clipboard?.writeText(winnerLoc.url)}
                 >
                   Copy
-                </button>
+                </Button>
               </div>
             </div>
             <MapPreview
@@ -175,14 +173,15 @@ export const SpinWheel = ({
                 />
               </div>
 
-              <button
-                type="button"
-                onClick={() => void handleVoteReroll()}
+              <Button
+                intent={"primary"}
+                size={"full"}
                 disabled={voted}
-                className="mt-4 w-full rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className={"mt-4 font-semibold"}
+                onClick={() => handleVoteReroll()}
               >
                 {voted ? t("roulette.voted") : t("roulette.vote_btn")}
-              </button>
+              </Button>
               <Text variant={"muted"} className={"mt-2"}>
                 {t("roulette.vote_hint")}
               </Text>

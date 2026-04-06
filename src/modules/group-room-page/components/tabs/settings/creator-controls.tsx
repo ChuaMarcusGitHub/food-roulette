@@ -1,7 +1,7 @@
 import { type FormEvent } from "react";
 import { t } from "@translate";
 import { IGroup } from "@/lib/types";
-import { Text } from "@/lib/components";
+import { Button, Text } from "@/lib/components";
 
 interface CreatorControlsProps {
   group: IGroup;
@@ -56,21 +56,12 @@ export const CreatorControls = ({
           disabled={busy}
         />
         <div className="flex flex-wrap gap-2">
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-lg bg-teal-600 px-3 py-2 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50 dark:hover:bg-teal-500"
-          >
+          <Button type="submit" intent="primary" size="md" disabled={busy}>
             {t("group.save_code")}
-          </button>
-          <button
-            type="button"
-            disabled={busy}
-            onClick={() => void onRandomize()}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-          >
+          </Button>
+          <Button intent="ghost" size="md" disabled={busy} onClick={() => void onRandomize()}>
             {t("group.randomize")}
-          </button>
+          </Button>
         </div>
       </form>
       <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-slate-700 dark:text-slate-300">

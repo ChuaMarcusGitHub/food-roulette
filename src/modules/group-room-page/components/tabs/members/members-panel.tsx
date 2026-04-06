@@ -1,4 +1,4 @@
-import { GroupLabel } from "@/lib/components";
+import { Button, GroupLabel } from "@/lib/components";
 import { IGroup, IMemberPublic } from "@/lib/types";
 import { t } from "@translate";
 
@@ -46,14 +46,15 @@ export const MembersPanel = ({
           <p className="text-xs text-amber-900 dark:text-amber-200">
             {t("group.no_creator_hint")}
           </p>
-          <button
-            type="button"
+          <Button
+            intent={"warning"}
+            size={"sm"}
             disabled={busy}
-            onClick={() => void handleClaimCreator()}
-            className="mt-2 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-400 disabled:opacity-50"
+            className={"mt-2"}
+            onClick={() => handleClaimCreator()}
           >
             {t("group.claim_creator")}
-          </button>
+          </Button>
         </div>
       ) : null}
       <ul className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-700 dark:bg-slate-900">
@@ -84,29 +85,29 @@ export const MembersPanel = ({
               {canRemove ? (
                 <div className="flex flex-wrap items-center gap-2">
                   {!isGroupCreator ? (
-                    <button
-                      type="button"
+                    <Button
+                      intent={"warningGhost"}
+                      size={"sm"}
                       disabled={busy}
                       onClick={() => {
                         if (window.confirm(t("group.confirm_transfer_creator")))
-                          void handleTransferCreator(m.id);
+                          handleTransferCreator(m.id);
                       }}
-                      className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-900 hover:bg-amber-100 disabled:opacity-50 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-100"
                     >
                       {t("group.transfer_creator")}
-                    </button>
+                    </Button>
                   ) : null}
-                  <button
-                    type="button"
+                  <Button
+                    intent={"dangerGhost"}
+                    size={"sm"}
                     disabled={busy}
                     onClick={() => {
                       if (window.confirm(t("group.confirm_remove")))
-                        void handleRemoveMember(m.id);
+                        handleRemoveMember(m.id);
                     }}
-                    className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950"
                   >
                     {t("group.remove")}
-                  </button>
+                  </Button>
                 </div>
               ) : null}
             </li>
@@ -121,19 +122,19 @@ export const MembersPanel = ({
           <p className="mt-1 text-xs text-red-800/90 dark:text-red-300/90">
             {t("group.delete_group_hint")}
           </p>
-          <button
-            type="button"
+          <Button
+            intent={"danger"}
             disabled={busy}
+            className={"mt-3"}
             onClick={() => {
               if (!window.confirm(t("group.confirm_delete_group"))) return;
               const typed = window.prompt(t("group.prompt_delete"));
               if (typed !== "DELETE") return;
-              void handleDeleteGroup();
+              handleDeleteGroup();
             }}
-            className="mt-3 rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800 disabled:opacity-50 dark:hover:bg-red-600"
           >
             {t("group.delete_group_cta")}
-          </button>
+          </Button>
         </div>
       ) : null}
     </section>

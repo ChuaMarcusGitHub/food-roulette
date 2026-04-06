@@ -21,6 +21,7 @@ export const LandingPageContent = () => {
   const supabase = getSupabase();
   const { postNotice } = useNotice();
 
+  // TODO: Fix this damn hook.
   const room = useGroupRoom(groupId);
   const roulette = useRoulette(
     supabase,
@@ -30,6 +31,8 @@ export const LandingPageContent = () => {
     room.locations,
     postNotice,
   );
+
+  
 
   if (!room.configured) {
     return <UnconfiguredEnv />;

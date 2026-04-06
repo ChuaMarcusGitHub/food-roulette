@@ -1,5 +1,5 @@
 import { t } from "@translate";
-import { GroupLabel, MapPreview, Text } from "@/lib/components";
+import { Button, GroupLabel, MapPreview, Text } from "@/lib/components";
 import { useMemo, useState } from "react";
 import { ILocation } from "@/lib/types";
 import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
@@ -42,6 +42,9 @@ export const PlacesList = ({
   const safePage = Math.min(Math.max(1, page), totalPages);
   const start = (safePage - 1) * PAGE_SIZE;
   const shown = filtered.slice(start, start + PAGE_SIZE);
+
+  const handlePrev = () => { setPage((p) => Math.max(1, p - 1)); setExpandedId(null); };
+  const handleNext = () => { setPage((p) => Math.min(totalPages, p + 1)); setExpandedId(null); };
 
   return (
     <section className="space-y-4">
@@ -128,30 +131,25 @@ export const PlacesList = ({
                       >
                         Open
                       </a>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          void navigator.clipboard?.writeText(loc.url);
-                        }}
-                        className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                      <Button
+                        intent={"ghost"}
+                        size={"sm"}
+                        onClick={() => navigator.clipboard?.writeText(loc.url)}
                       >
                         Copy
-                      </button>
+                      </Button>
                       {isCreator ? (
-                        <button
-                          type="button"
+                        <Button
+                          intent={"dangerGhost"}
+                          size={"sm"}
                           disabled={busy}
                           onClick={() => {
-                            if (
-                              !window.confirm(t("group.confirm_remove_place"))
-                            )
-                              return;
+                            if (!window.confirm(t("group.confirm_remove_place"))) return;
                             void handleRemovePlace(loc.id);
                           }}
-                          className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-800 hover:bg-red-100 disabled:opacity-50 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200 dark:hover:bg-red-950"
                         >
                           {t("group.remove_place")}
-                        </button>
+                        </Button>
                       ) : null}
                     </div>
                   </div>
@@ -174,17 +172,13 @@ export const PlacesList = ({
 
       {locations.length > 0 && filtered.length > 0 ? (
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <button
-            type="button"
+          <Button
+            intent={"ghost"}
             disabled={safePage <= 1}
-            onClick={() => {
-              setPage((p) => Math.max(1, p - 1));
-              setExpandedId(null);
-            }}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+            onClick={handlePrev}
           >
             Prev
-          </button>
+          </Button>
 
           <Text>
             Page
@@ -194,17 +188,13 @@ export const PlacesList = ({
             / {totalPages}
           </Text>
 
-          <button
-            type="button"
+          <Button
+            intent={"ghost"}
             disabled={safePage >= totalPages}
-            onClick={() => {
-              setPage((p) => Math.min(totalPages, p + 1));
-              setExpandedId(null);
-            }}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-800 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+            onClick={handleNext}
           >
             Next
-          </button>
+          </Button>
         </div>
       ) : null}
     </section>

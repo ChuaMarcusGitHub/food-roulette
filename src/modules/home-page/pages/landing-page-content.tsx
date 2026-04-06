@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import {
   getDeviceId,
@@ -18,7 +18,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
-import { GroupLabel, Text } from "@/lib/components";
+import { Button, GroupLabel, LinkRecover, Text } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -223,13 +223,9 @@ export const LandingPageContent = () => {
             disabled={busy}
           />
           <Text variant={"muted"}>{t("home.recovery_hint")}</Text>
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 disabled:opacity-50"
-          >
+          <Button type="submit" intent="primary" disabled={busy}>
             {t("home.create_cta")}
-          </button>
+          </Button>
         </form>
       </section>
 
@@ -253,27 +249,20 @@ export const LandingPageContent = () => {
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-mono tracking-widest text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 transition hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-          >
+          <Button type="submit" intent="ghost" disabled={busy}>
             {t("home.join_cta")}
-          </button>
+          </Button>
         </form>
       </section>
 
-      <p className="text-center text-sm text-slate-500 dark:text-slate-400">
-        <Link
-          to={PATHS.RECOVER}
-          className="font-medium text-teal-700 underline decoration-teal-300 underline-offset-2 hover:text-teal-800 dark:text-teal-400"
-        >
-          {t("home.recover_link")}
-        </Link>
-      </p>
-      <p className="mt-3 text-center text-sm text-slate-500 dark:text-slate-400">
+      <LinkRecover
+        className={
+          "text-center text-sm font-medium underline decoration-teal-300 underline-offset-2 hover:text-teal-800"
+        }
+      />
+      <Text variant={"muted"} className={"mt-3 text-center"}>
         {t("home.auto_redirect")}
-      </p>
+      </Text>
     </>
   );
 };

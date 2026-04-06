@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
 import { IGroup } from "@/lib/types";
-import { GroupLabel, Text } from "@/lib/components";
+import { Button, GroupLabel, LinkRecover, Text } from "@/lib/components";
 
 interface JoinGateProps {
   group: IGroup;
@@ -32,12 +32,9 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
         >
           {t("common.back_home")}
         </Link>
-        <Link
-          to={PATHS.RECOVER}
-          className="text-sm text-teal-700 underline decoration-teal-300 underline-offset-2 dark:text-teal-400"
-        >
-          {t("home.recover_link")}
-        </Link>
+        <LinkRecover
+          className={"text-sm underline decoration-teal-300 underline-offset-2"}
+        />
       </div>
 
       <header className="mt-6 border-b border-slate-200 pb-6 dark:border-slate-700">
@@ -77,13 +74,9 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50 dark:hover:bg-teal-500"
-          >
+          <Button type="submit" intent="primary" disabled={busy}>
             {t("group.enter_room")}
-          </button>
+          </Button>
         </form>
       </section>
     </div>
