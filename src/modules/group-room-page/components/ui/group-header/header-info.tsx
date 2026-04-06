@@ -1,4 +1,4 @@
-import { Text } from "@/lib/components/typography";
+import { PText } from "@/lib/components/typography";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@/lib/i18n/translate";
 import { useContext } from "react";
@@ -26,18 +26,18 @@ export const HeaderInfo: React.FC<IHeaderInfoProps> = ({
 
   return (
     <div>
-      <Text variant={"h1"}>{groupName}</Text>
-      <Text variant={"body1"} className={"mt-2 font-mono"}>
+      <PText variant={"h1"}>{groupName}</PText>
+      <PText variant={"body1"} className={"mt-2 font-mono"}>
         <span className="text-slate-500 dark:text-slate-500">
           {t("group.invite")}
         </span>
         <span className="font-semibold text-teal-800 dark:text-teal-400">
           {inviteCode}
         </span>
-      </Text>
-      <Text variant={"body1"} className={"my-1.5"}>
+      </PText>
+      <PText variant={"body1"} className={"my-1.5"}>
         {memberLine}
-      </Text>
+      </PText>
     </div>
   );
 };

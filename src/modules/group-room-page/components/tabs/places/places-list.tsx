@@ -1,5 +1,5 @@
 import { t } from "@translate";
-import { Button, GroupLabel, Input, MapPreview, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, MapPreview, PText } from "@/lib/components";
 import { useMemo, useState } from "react";
 import { ILocation } from "@/lib/types";
 import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
@@ -56,19 +56,19 @@ export const PlacesList = ({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Input type={"text"} value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); setExpandedId(null); }} placeholder={"Search places…"} className={"sm:max-w-sm"} />
-        <Text variant={"muted"}>
+        <PText variant={"mutedXs"}>
           {filtered.length === locations.length ? null : (
             <>
               {filtered.length} / {locations.length}
             </>
           )}
-        </Text>
+        </PText>
       </div>
 
       {locations.length === 0 ? (
-        <Text variant={"muted"}>
+        <PText variant={"mutedXs"}>
           {t("group.places_empty_tab", { tabName: t("group.tabs.add") })}
-        </Text>
+        </PText>
       ) : (
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
           <ul className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -92,11 +92,11 @@ export const PlacesList = ({
                       }
                       className="min-w-0 flex-1 text-left"
                     >
-                      <Text variant={"body2"} className="truncate">
+                      <PText variant={"body2"} className="truncate">
                         {label}
-                      </Text>
-                      <Text
-                        variant={"muted"}
+                      </PText>
+                      <PText
+                        variant={"mutedXs"}
                         className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1"
                       >
                         <span className="truncate">{domain}</span>
@@ -109,7 +109,7 @@ export const PlacesList = ({
                         <span className="truncate">
                           {t("group.add_by")} {addedBy}
                         </span>
-                      </Text>
+                      </PText>
                     </button>
 
                     <div className="flex shrink-0 flex-wrap items-center gap-2">
@@ -170,13 +170,13 @@ export const PlacesList = ({
             Prev
           </Button>
 
-          <Text>
+          <PText>
             Page
             <span className="font-semibold text-slate-900 dark:text-slate-100">
               {safePage}
             </span>
             / {totalPages}
-          </Text>
+          </PText>
 
           <Button
             intent={"ghost"}

@@ -1,7 +1,7 @@
 import { type SubmitEvent } from "react";
 import { t } from "@translate";
 import { IGroup } from "@/lib/types";
-import { Button, Input, Text } from "@/lib/components";
+import { Button, Input, PText } from "@/lib/components";
 
 interface CreatorControlsProps {
   group: IGroup;
@@ -38,7 +38,7 @@ export const CreatorControls = ({
 
   return (
     <div className={wrap}>
-      <Text variant={"labelSm"}>{t("group.creator_invite")}</Text>
+      <PText variant={"labelXs"}>{t("group.creator_invite")}</PText>
       <form
         onSubmit={handleSubmit}
         className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end"

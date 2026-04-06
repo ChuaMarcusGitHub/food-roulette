@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
 import { IGroup } from "@/lib/types";
-import { Button, GroupLabel, Input, LinkRecover, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, LinkRecover, PText } from "@/lib/components";
 
 interface JoinGateProps {
   group: IGroup;
@@ -38,17 +38,17 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
       </div>
 
       <header className="mt-6 border-b border-slate-200 pb-6 dark:border-slate-700">
-        <Text variant={"h1"}>
+        <PText variant={"h1"}>
           {t("group.join_gate_title", { name: group.name ?? "" })}
-        </Text>
+        </PText>
 
         {group.invite_code ? (
-          <Text className="mt-2 font-mono">
+          <PText className="mt-2 font-mono">
             {t("group.join_code")}{" "}
             <span className="font-semibold text-teal-800 dark:text-teal-400">
               {group.invite_code}
             </span>
-          </Text>
+          </PText>
         ) : null}
       </header>
 
@@ -60,12 +60,12 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <GroupLabel label={t("group.join_your_name")} />
-        <Text variant={'label'} className="mt-1">
+        <PText variant={'label'} className="mt-1">
           {t("group.join_hint")}
-        </Text>
-        <Text variant={"hint"} className="mt-2">
+        </PText>
+        <PText variant={"hint"} className="mt-2">
           {t("group.join_tip")}
-        </Text>
+        </PText>
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3">
           <Input
             type={"text"}

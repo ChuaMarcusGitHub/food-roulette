@@ -2,7 +2,7 @@ import type { IUseRouletteReturn } from "@/lib/hooks/use-roulette";
 import { useContext } from "react";
 import { LocaleContext } from "@/lib/i18n/locale-context";
 import { t } from "@translate";
-import { Button, MapPreview, Text } from "@/lib/components";
+import { Button, MapPreview, PText } from "@/lib/components";
 import { SpinProgressRing } from "./spin-progress-ring";
 import { placeLabel } from "./utils/place-label";
 import { getDomainLabel } from "./utils/get-domain-label";
@@ -46,10 +46,10 @@ export const SpinWheel = ({
         {phase !== "result" ? (
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <Text variant={"labelSm"}>{t("common.app_name")}</Text>
-              <Text className="mt-1 max-w-md leading-relaxed">
+              <PText variant={"labelXs"}>{t("common.app_name")}</PText>
+              <PText className="mt-1 max-w-md leading-relaxed">
                 {t("roulette.sync_hint")}
-              </Text>
+              </PText>
             </div>
             <Button
               intent={"primary"}
@@ -67,7 +67,7 @@ export const SpinWheel = ({
             <div className="relative aspect-square max-h-[min(72vw,20rem)] w-full max-w-[20rem] mx-auto">
               <SpinProgressRing progress={spinProgress} />
               <div className="absolute inset-[12%] flex flex-col items-center justify-center text-center">
-                <Text variant={"labelSm"}>{t("roulette.picking")}</Text>
+                <PText variant={"labelXs"}>{t("roulette.picking")}</PText>
 
                 <p
                   key={showingLoc.id + String(spinningContext?.index ?? 0)}
@@ -96,9 +96,9 @@ export const SpinWheel = ({
               </div>
             ) : null}
 
-            <Text variant={"muted"} className={"mt-3 truncate text-center "}>
+            <PText variant={"mutedXs"} className={"mt-3 truncate text-center "}>
               {showingLoc.url}
-            </Text>
+            </PText>
           </div>
         )}
 
@@ -111,7 +111,7 @@ export const SpinWheel = ({
               {placeLabel(winnerLoc, t("roulette.place_fallback"))}
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-              <Text variant={"muted"}>{getDomainLabel(winnerLoc.url)}</Text>
+              <PText variant={"mutedXs"}>{getDomainLabel(winnerLoc.url)}</PText>
 
               <div className="flex flex-wrap gap-2">
                 <a
@@ -139,7 +139,7 @@ export const SpinWheel = ({
 
             <div className="mt-5 rounded-lg border border-slate-200 bg-white/60 p-4 dark:border-slate-600 dark:bg-slate-900/30">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <Text>
+                <PText>
                   {t("roulette.vote_line")}
                   <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {votes.length}
@@ -155,7 +155,7 @@ export const SpinWheel = ({
                       {t("roulette.majority")}
                     </span>
                   ) : null}
-                </Text>
+                </PText>
                 {majorityNeed > 0 ? (
                   <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                     {locale === "jp"
@@ -182,9 +182,9 @@ export const SpinWheel = ({
               >
                 {voted ? t("roulette.voted") : t("roulette.vote_btn")}
               </Button>
-              <Text variant={"muted"} className={"mt-2"}>
+              <PText variant={"mutedXs"} className={"mt-2"}>
                 {t("roulette.vote_hint")}
-              </Text>
+              </PText>
             </div>
           </div>
         )}
@@ -192,9 +192,9 @@ export const SpinWheel = ({
         {phase === "idle" && !locations.length && (
           <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-6 py-10 text-center dark:border-slate-600 dark:bg-slate-800/30">
             <p className="text-3xl">🍽️</p>
-            <Text className={"mt-3"}>
+            <PText className={"mt-3"}>
               {t("roulette.add_places_first", { tabName: addTabLabel })}
-            </Text>
+            </PText>
           </div>
         )}
       </div>

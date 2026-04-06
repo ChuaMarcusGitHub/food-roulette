@@ -1,6 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import { t } from "@translate";
-import { Button, Input, Text } from "@/lib/components";
+import { Button, Input, PText } from "@/lib/components";
 import { useNotice } from "@/lib/hooks";
 import { validatePassword } from "@/modules/group-room-page/utils";
 
@@ -59,12 +59,12 @@ export const PasswordForm: React.FC<IPasswordFormProps> = ({
 
   return (
     <>
-      <Text variant={"labelSm"}>{t(`group.${promptKeys.title}`)}</Text>
-      <Text className="mt-1">{t(`group.${promptKeys.hint}`)}</Text>
+      <PText variant={"labelXs"}>{t(`group.${promptKeys.title}`)}</PText>
+      <PText className="mt-1">{t(`group.${promptKeys.hint}`)}</PText>
       {!hasPassword && (
-        <Text variant={"warn"} className="mt-2">
+        <PText variant={"warn"} className="mt-2">
           {t("group.member_password_remember_warn")}
-        </Text>
+        </PText>
       )}
 
       <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-2">

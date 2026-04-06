@@ -1,5 +1,5 @@
-import { Text } from "@/lib/components";
+import { PText } from "@/lib/components";
 
 export const GroupLabel = ({ label }: { label: string }) => {
-  return <Text variant="label">{label}</Text>;
+  return <PText variant="label">{label}</PText>;
 };

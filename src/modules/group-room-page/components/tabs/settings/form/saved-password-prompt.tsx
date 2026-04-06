@@ -1,4 +1,4 @@
-import { Button, Text } from "@/lib/components";
+import { Button, PText } from "@/lib/components";
 import { t } from "@/lib/i18n/translate";
 
 interface ISavedPasswordPromptProps {
@@ -17,12 +17,12 @@ export const SavedPasswordPrompt: React.FC<ISavedPasswordPromptProps> = ({
           ✓
         </span>
         <div>
-          <Text variant={"body2"} className={"font-medium text-slate-800"}>
+          <PText variant={"body2"} className={"font-medium text-slate-800"}>
             {t("group.member_password_saved_short")}
-          </Text>
-          <Text variant={"muted"} className={"mt-0.5"}>
+          </PText>
+          <PText variant={"mutedXs"} className={"mt-0.5"}>
             {t("group.member_password_remember_stored")}
-          </Text>
+          </PText>
         </div>
       </div>
       <Button

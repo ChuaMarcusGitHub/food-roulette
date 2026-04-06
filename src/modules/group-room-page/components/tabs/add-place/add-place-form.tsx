@@ -1,12 +1,13 @@
 import { useState, type SubmitEvent } from "react";
-import {
-  derivePlaceNameFromGoogleMapsUrl,
-  isGoogleMapsUrl,
-  isGoogleMapsShortUrl,
-} from "@/lib/utils/map-embed";
+
 import { t } from "@translate";
 import { useNotice } from "@/lib/hooks";
-import { Button, GroupLabel, Input } from "@/lib/components";
+import { Button, Input, PText } from "@/lib/components";
+import {
+  derivePlaceNameFromGoogleMapsUrl,
+  isGoogleMapsShortUrl,
+  validateGoogleMapsUrl,
+} from "@/lib/utils/google-url-utils";
 interface IAddPlaceFormProps {
   busy: boolean;
   handleAddPlace: (name: string, url: string) => Promise<void>;
@@ -22,25 +23,14 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const u = url.trim();
-    if (!u) {
-      postNotice({ text: t("group.err_add_url"), variant: "error" });
+
+    const validationError = validateGoogleMapsUrl(u);
+
+    if (validationError) {
+      postNotice({ text: validationError, variant: "error" });
       return;
     }
-    let parsed: URL;
-    try {
-      parsed = new URL(u);
-    } catch {
-      postNotice({ text: t("group.err_url_invalid"), variant: "error" });
-      return;
-    }
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      postNotice({ text: t("group.err_url_scheme"), variant: "error" });
-      return;
-    }
-    if (!isGoogleMapsUrl(u)) {
-      postNotice({ text: t("group.err_google_maps_only"), variant: "error" });
-      return;
-    }
+
     let normalizedUrl = u;
     if (isGoogleMapsShortUrl(u)) {
       try {
@@ -68,32 +58,38 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
   const inputId = "add-place-google-url";
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-      <GroupLabel label={t("group.add_title_google")} />
-      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-        {t("group.add_hint_google_only")}
-      </p>
-      <form
-        onSubmit={handleSubmit}
-        autoComplete="off"
-        className="mt-4 flex flex-col gap-4"
-      >
-        <div>
-          <label
-            htmlFor={inputId}
-            className="block text-sm font-medium text-slate-800 dark:text-slate-200"
-          >
-            {t("group.add_url_label")}
-          </label>
-          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-            {t("group.add_name_auto_hint")}
-          </p>
-          <Input id={inputId} name={"google-maps-url"} type={"text"} inputMode={"url"} autoComplete={"off"} spellCheck={false} placeholder={t("group.google_maps_url_ph")} value={url} onChange={(e) => setUrl(e.target.value)} className={"mt-2"} disabled={busy} />
-        </div>
-        <Button type={"submit"} intent={"submit"} disabled={busy}>
-          {t("group.save_place")}
-        </Button>
-      </form>
-    </section>
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="off"
+      className="mt-4 flex flex-col gap-4"
+    >
+      <div>
+        <label
+          htmlFor={inputId}
+          className="block text-sm font-medium text-slate-800 dark:text-slate-200"
+        >
+          {t("group.add_url_label")}
+        </label>
+        <PText variant={"mutedXs"} className={"mt-0.5"}>
+          {t("group.add_name_auto_hint")}
+        </PText>
+        <Input
+          id={inputId}
+          name={"google-maps-url"}
+          type={"text"}
+          inputMode={"url"}
+          autoComplete={"off"}
+          spellCheck={false}
+          placeholder={t("group.google_maps_url_ph")}
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          className={"mt-2"}
+          disabled={busy}
+        />
+      </div>
+      <Button type={"submit"} intent={"submit"} disabled={busy}>
+        {t("group.save_place")}
+      </Button>
+    </form>
   );
 };

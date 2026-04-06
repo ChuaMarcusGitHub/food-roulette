@@ -18,7 +18,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
-import { Button, GroupLabel, Input, LinkRecover, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, LinkRecover, PText } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -178,8 +178,8 @@ export const LandingPageContent = () => {
   if (!configured) {
     return (
       <>
-        <Text variant={"h1"}>{t("common.app_name")}</Text>
-        <Text className="mt-3">{t("home.err_env")}</Text>
+        <PText variant={"h1"}>{t("common.app_name")}</PText>
+        <PText className="mt-3">{t("home.err_env")}</PText>
       </>
     );
   }
@@ -187,7 +187,7 @@ export const LandingPageContent = () => {
   return (
     <>
       <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-700">
-        <Text variant={"h1"}>{t("common.app_name")}</Text>
+        <PText variant={"h1"}>{t("common.app_name")}</PText>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           {t("home.tagline")}
         </p>
@@ -195,12 +195,12 @@ export const LandingPageContent = () => {
 
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <GroupLabel label={t("home.create_title")} />
-        <Text className="mt-2">{t("home.retention_warning")}</Text>
+        <PText className="mt-2">{t("home.retention_warning")}</PText>
         <form onSubmit={handleCreateGroup} className="mt-3 flex flex-col gap-3">
           <Input type={"text"} placeholder={t("home.group_name_ph")} value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)} disabled={busy} />
           <Input type={"text"} placeholder={t("home.your_name_ph")} value={creatorName} onChange={(e) => setCreatorName(e.target.value)} disabled={busy} />
           <Input type={"password"} autoComplete={"new-password"} placeholder={t("home.recovery_key_ph")} value={memberPassword} onChange={(e) => setMemberPasswordState(e.target.value)} disabled={busy} />
-          <Text variant={"muted"}>{t("home.recovery_hint")}</Text>
+          <PText variant={"mutedXs"}>{t("home.recovery_hint")}</PText>
           <Button type="submit" intent="primary" disabled={busy}>
             {t("home.create_cta")}
           </Button>
@@ -223,9 +223,9 @@ export const LandingPageContent = () => {
           "text-center text-sm font-medium underline decoration-teal-300 underline-offset-2 hover:text-teal-800"
         }
       />
-      <Text variant={"muted"} className={"mt-3 text-center"}>
+      <PText variant={"mutedXs"} className={"mt-3 text-center"}>
         {t("home.auto_redirect")}
-      </Text>
+      </PText>
     </>
   );
 };
