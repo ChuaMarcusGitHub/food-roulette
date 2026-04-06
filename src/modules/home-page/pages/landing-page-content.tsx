@@ -18,7 +18,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { MIN_PASSWORD_LENGTH, INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
-import { Button, GroupLabel, LinkRecover, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, LinkRecover, Text } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -197,31 +197,9 @@ export const LandingPageContent = () => {
         <GroupLabel label={t("home.create_title")} />
         <Text className="mt-2">{t("home.retention_warning")}</Text>
         <form onSubmit={handleCreateGroup} className="mt-3 flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder={t("home.group_name_ph")}
-            value={newGroupName}
-            onChange={(e) => setNewGroupName(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
-          <input
-            type="text"
-            placeholder={t("home.your_name_ph")}
-            value={creatorName}
-            onChange={(e) => setCreatorName(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
-          <input
-            type="password"
-            autoComplete="new-password"
-            placeholder={t("home.recovery_key_ph")}
-            value={memberPassword}
-            onChange={(e) => setMemberPasswordState(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input type={"text"} placeholder={t("home.group_name_ph")} value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)} disabled={busy} />
+          <Input type={"text"} placeholder={t("home.your_name_ph")} value={creatorName} onChange={(e) => setCreatorName(e.target.value)} disabled={busy} />
+          <Input type={"password"} autoComplete={"new-password"} placeholder={t("home.recovery_key_ph")} value={memberPassword} onChange={(e) => setMemberPasswordState(e.target.value)} disabled={busy} />
           <Text variant={"muted"}>{t("home.recovery_hint")}</Text>
           <Button type="submit" intent="primary" disabled={busy}>
             {t("home.create_cta")}
@@ -232,23 +210,8 @@ export const LandingPageContent = () => {
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900/50">
         <GroupLabel label={t("home.join_title")} />
         <form onSubmit={handleJoinGroup} className="mt-3 flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder={t("home.join_name_ph")}
-            value={joinName}
-            onChange={(e) => setJoinName(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
-          <input
-            type="text"
-            placeholder={t("home.invite_ph")}
-            value={joinCode}
-            onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-            maxLength={INVITE_CODE_LENGTH}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-mono tracking-widest text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input type={"text"} placeholder={t("home.join_name_ph")} value={joinName} onChange={(e) => setJoinName(e.target.value)} disabled={busy} />
+          <Input intent={"mono"} type={"text"} placeholder={t("home.invite_ph")} value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} maxLength={INVITE_CODE_LENGTH} disabled={busy} />
           <Button type="submit" intent="ghost" disabled={busy}>
             {t("home.join_cta")}
           </Button>

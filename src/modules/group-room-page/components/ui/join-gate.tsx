@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { t } from "@translate";
 import { PATHS } from "@/routes";
 import { IGroup } from "@/lib/types";
-import { Button, GroupLabel, LinkRecover, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, LinkRecover, Text } from "@/lib/components";
 
 interface JoinGateProps {
   group: IGroup;
@@ -38,9 +38,10 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
       </div>
 
       <header className="mt-6 border-b border-slate-200 pb-6 dark:border-slate-700">
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+        <Text variant={"h1"}>
           {t("group.join_gate_title", { name: group.name ?? "" })}
-        </h1>
+        </Text>
+
         {group.invite_code ? (
           <Text className="mt-2 font-mono">
             {t("group.join_code")}{" "}
@@ -59,19 +60,18 @@ export const JoinGate = ({ group, busy, onJoin }: JoinGateProps) => {
 
       <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
         <GroupLabel label={t("group.join_your_name")} />
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+        <Text variant={'label'} className="mt-1">
           {t("group.join_hint")}
-        </p>
-        <p className="mt-2 rounded-lg bg-slate-50 px-2 py-1.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+        </Text>
+        <Text variant={"hint"} className="mt-2">
           {t("group.join_tip")}
-        </p>
+        </Text>
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3">
-          <input
-            type="text"
+          <Input
+            type={"text"}
             placeholder={t("group.join_placeholder")}
             value={joinName}
             onChange={(e) => setJoinName(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
             disabled={busy}
           />
           <Button type="submit" intent="primary" disabled={busy}>

@@ -1,9 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { t } from "@translate";
 import { MIN_PASSWORD_LENGTH } from "@/constants";
 import { useNotice } from "@/lib/hooks";
 import { IMemberPublic } from "@/lib/types";
-import { Button, Text } from "@/lib/components";
+import { Button, Input, Text } from "@/lib/components";
 
 interface MemberPasswordFormProps {
   member: IMemberPublic;
@@ -27,7 +27,7 @@ export const MemberPasswordForm = ({
 
   const hasPassword = Boolean(member.password_set);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const a = pw.trim();
     const b = pw2.trim();
@@ -74,12 +74,12 @@ export const MemberPasswordForm = ({
               ✓
             </span>
             <div>
-              <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+              <Text variant={"body2"} className={"font-medium text-slate-800"}>
                 {t("group.member_password_saved_short")}
-              </p>
-              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              </Text>
+              <Text variant={"muted"} className={"mt-0.5"}>
                 {t("group.member_password_remember_stored")}
-              </p>
+              </Text>
             </div>
           </div>
           <Button intent={"ghost"} className={"shrink-0"} onClick={() => setEditing(true)}>
@@ -104,30 +104,14 @@ export const MemberPasswordForm = ({
           : t("group.member_password_hint")}
       </Text>
       {!hasPassword ? (
-        <p className="mt-2 rounded-lg border border-amber-200/80 bg-amber-50/90 px-3 py-2 text-xs text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100">
+        <Text variant={"warn"} className="mt-2">
           {t("group.member_password_remember_warn")}
-        </p>
+        </Text>
       ) : null}
 
       <form onSubmit={handleSubmit} className="mt-3 flex flex-col gap-2">
-        <input
-          type="password"
-          autoComplete="new-password"
-          placeholder={t("group.member_password_placeholder")}
-          value={pw}
-          onChange={(e) => setPw(e.target.value)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-          disabled={busy}
-        />
-        <input
-          type="password"
-          autoComplete="new-password"
-          placeholder={t("group.member_password_confirm")}
-          value={pw2}
-          onChange={(e) => setPw2(e.target.value)}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-          disabled={busy}
-        />
+        <Input type={"password"} autoComplete={"new-password"} placeholder={t("group.member_password_placeholder")} value={pw} onChange={(e) => setPw(e.target.value)} disabled={busy} />
+        <Input type={"password"} autoComplete={"new-password"} placeholder={t("group.member_password_confirm")} value={pw2} onChange={(e) => setPw2(e.target.value)} disabled={busy} />
         <div className="flex flex-wrap gap-2">
           <Button type={"submit"} intent={"submit"} disabled={busy}>
             {hasPassword

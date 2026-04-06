@@ -1,5 +1,5 @@
 import { t } from "@translate";
-import { Button, GroupLabel, MapPreview, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, MapPreview, Text } from "@/lib/components";
 import { useMemo, useState } from "react";
 import { ILocation } from "@/lib/types";
 import { getDomainLabel } from "@/modules/group-room-page/utils/get-domain-label";
@@ -55,17 +55,7 @@ export const PlacesList = ({
       />
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setPage(1);
-            setExpandedId(null);
-          }}
-          placeholder="Search places…"
-          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 sm:max-w-sm"
-        />
+        <Input type={"text"} value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); setExpandedId(null); }} placeholder={"Search places…"} className={"sm:max-w-sm"} />
         <Text variant={"muted"}>
           {filtered.length === locations.length ? null : (
             <>

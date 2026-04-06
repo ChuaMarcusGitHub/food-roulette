@@ -1,7 +1,7 @@
-import { type FormEvent } from "react";
+import { type SubmitEvent } from "react";
 import { t } from "@translate";
 import { IGroup } from "@/lib/types";
-import { Button, Text } from "@/lib/components";
+import { Button, Input, Text } from "@/lib/components";
 
 interface CreatorControlsProps {
   group: IGroup;
@@ -26,7 +26,7 @@ export const CreatorControls = ({
   onToggleLock,
   embedded = false,
 }: CreatorControlsProps) => {
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const code = inviteDraft.trim().toUpperCase();
     if (code.length === 6) void onSaveCode(code);
@@ -43,18 +43,7 @@ export const CreatorControls = ({
         onSubmit={handleSubmit}
         className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-end"
       >
-        <input
-          type="text"
-          maxLength={6}
-          value={inviteDraft}
-          onChange={(e) =>
-            setInviteDraft(
-              e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""),
-            )
-          }
-          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 font-mono tracking-widest sm:max-w-[10rem] dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-          disabled={busy}
-        />
+        <Input intent={"mono"} type={"text"} maxLength={6} value={inviteDraft} onChange={(e) => setInviteDraft(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))} className={"sm:max-w-[10rem]"} disabled={busy} />
         <div className="flex flex-wrap gap-2">
           <Button type="submit" intent="primary" size="md" disabled={busy}>
             {t("group.save_code")}

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, type FormEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { getDeviceId, setStoredGroupId } from "@/lib/utils/device";
 import { t } from "@translate";
 import {
@@ -10,7 +10,7 @@ import {
 import { useNotice } from "@/lib/hooks/use-notice";
 import { INVITE_CODE_LENGTH } from "@/constants";
 import { PATHS } from "@/routes";
-import { Button, GroupLabel, Text } from "@/lib/components";
+import { Button, GroupLabel, Input, Text } from "@/lib/components";
 
 export const LandingPageContent = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const LandingPageContent = () => {
   const [mPassword, setMPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
-  async function handleMemberSubmit(e: FormEvent) {
+  async function handleMemberSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!supabase) return;
     const code = mInvite.trim().toUpperCase();
@@ -105,35 +105,15 @@ export const LandingPageContent = () => {
           <Text variant={"labelSm"} className={"block"}>
             {t("recover.invite_ph")}
           </Text>
-          <input
-            type="text"
-            value={mInvite}
-            onChange={(e) => setMInvite(e.target.value.toUpperCase())}
-            maxLength={INVITE_CODE_LENGTH}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 font-mono tracking-widest dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input intent={"mono"} type={"text"} value={mInvite} onChange={(e) => setMInvite(e.target.value.toUpperCase())} maxLength={INVITE_CODE_LENGTH} disabled={busy} />
           <Text variant={"labelSm"} className={"mt-1 block"}>
             {t("recover.name_ph")}
           </Text>
-          <input
-            type="text"
-            value={mName}
-            onChange={(e) => setMName(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input type={"text"} value={mName} onChange={(e) => setMName(e.target.value)} disabled={busy} />
           <Text variant={"labelSm"} className={"mt-1 block"}>
             {t("recover.member_password_ph")}
           </Text>
-          <input
-            type="password"
-            autoComplete="new-password"
-            value={mPassword}
-            onChange={(e) => setMPassword(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input type={"password"} autoComplete={"new-password"} value={mPassword} onChange={(e) => setMPassword(e.target.value)} disabled={busy} />
           <Button
             type="submit"
             intent="submit"

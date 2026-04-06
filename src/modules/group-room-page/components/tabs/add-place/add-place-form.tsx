@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import {
   derivePlaceNameFromGoogleMapsUrl,
   isGoogleMapsUrl,
@@ -6,7 +6,7 @@ import {
 } from "@/lib/utils/map-embed";
 import { t } from "@translate";
 import { useNotice } from "@/lib/hooks";
-import { Button, GroupLabel } from "@/lib/components";
+import { Button, GroupLabel, Input } from "@/lib/components";
 interface IAddPlaceFormProps {
   busy: boolean;
   handleAddPlace: (name: string, url: string) => Promise<void>;
@@ -19,7 +19,7 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
   const { postNotice } = useNotice();
   const [url, setUrl] = useState("");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const u = url.trim();
     if (!u) {
@@ -88,19 +88,7 @@ export const AddPlaceForm: React.FC<IAddPlaceFormProps> = ({
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             {t("group.add_name_auto_hint")}
           </p>
-          <input
-            id={inputId}
-            name="google-maps-url"
-            type="text"
-            inputMode="url"
-            autoComplete="off"
-            spellCheck={false}
-            placeholder={t("group.google_maps_url_ph")}
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none ring-teal-600 focus:ring-2 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100"
-            disabled={busy}
-          />
+          <Input id={inputId} name={"google-maps-url"} type={"text"} inputMode={"url"} autoComplete={"off"} spellCheck={false} placeholder={t("group.google_maps_url_ph")} value={url} onChange={(e) => setUrl(e.target.value)} className={"mt-2"} disabled={busy} />
         </div>
         <Button type={"submit"} intent={"submit"} disabled={busy}>
           {t("group.save_place")}
