@@ -1,2 +1,9 @@
-export { isSupabaseConfigured, getSupabase } from "./client";
-export type { SupabaseClient } from "./client";
+// Supabase slice imports
+export * from "./admin";
+export * from './client'
+export * from "./groups";
+export * from "./groups";
+export * from "./locations";
+export * from "./members";
+export * from "./recovery";
+export * from "./roulette";

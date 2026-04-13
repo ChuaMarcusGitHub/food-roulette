@@ -1,17 +1,17 @@
 import type { SupabaseClient } from "@/lib/supabase/client";
-import type { Location } from "@/types";
+import type { ILocation } from "../types";
 
 /** Fetch all locations for a group, ordered by creation. */
 export async function fetchLocations(
   supabase: SupabaseClient,
   groupId: string,
-): Promise<{ data: Location[]; error: string | null }> {
+): Promise<{ data: ILocation[]; error: string | null }> {
   const { data, error } = await supabase
     .from("locations")
     .select("*")
     .eq("group_id", groupId)
     .order("created_at", { ascending: true });
-  return { data: (data ?? []) as Location[], error: error?.message ?? null };
+  return { data: (data ?? []) as ILocation[], error: error?.message ?? null };
 }
 
 /** Insert a new location. */

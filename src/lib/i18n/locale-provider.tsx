@@ -6,7 +6,7 @@ import { LocaleContext } from "./locale-context";
 import { sync } from "@translate";
 import React from "react";
 
-interface ProviderProps {
+interface IProviderProps {
   children: React.ReactNode;
   texts: LocaleMap;
   browserLanguage: Locale;
@@ -16,7 +16,7 @@ export function LocaleProvider({
   children,
   texts,
   browserLanguage,
-}: ProviderProps) {
+}: IProviderProps) {
   const [locale, setLocale] = useState<Locale>(() => {
     sync(browserLanguage, texts[browserLanguage]);
     return browserLanguage;

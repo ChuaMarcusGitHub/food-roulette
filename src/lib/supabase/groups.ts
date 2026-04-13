@@ -1,17 +1,17 @@
 import type { SupabaseClient } from "@/lib/supabase/client";
-import type { Group } from "@/types";
+import type { IGroup } from "../types";
 
 /** Fetch a single group by id. */
 export async function fetchGroup(
   supabase: SupabaseClient,
   groupId: string,
-): Promise<{ data: Group | null; error: string | null }> {
+): Promise<{ data: IGroup | null; error: string | null }> {
   const { data, error } = await supabase
     .from("groups")
     .select("*")
     .eq("id", groupId)
     .maybeSingle();
-  return { data: data as Group | null, error: error?.message ?? null };
+  return { data: data as IGroup | null, error: error?.message ?? null };
 }
 
 /** Create a new group row and return it. */
@@ -19,13 +19,13 @@ export async function createGroup(
   supabase: SupabaseClient,
   name: string,
   inviteCode: string,
-): Promise<{ data: Group | null; error: string | null }> {
+): Promise<{ data: IGroup | null; error: string | null }> {
   const { data, error } = await supabase
     .from("groups")
     .insert({ name, invite_code: inviteCode })
     .select()
     .single();
-  return { data: data as Group | null, error: error?.message ?? null };
+  return { data: data as IGroup | null, error: error?.message ?? null };
 }
 
 /** Set the creator member id on a group. */
