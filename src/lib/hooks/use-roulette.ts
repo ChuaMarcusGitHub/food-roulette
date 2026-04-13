@@ -16,7 +16,7 @@ import type {
 
 type Phase = "idle" | "spinning" | "result";
 
-export interface SpinningContext {
+export interface ISpinningContext {
   prev?: ILocation;
   next?: ILocation;
   index: number;
@@ -32,7 +32,7 @@ export interface IUseRouletteReturn {
   majorityReached: boolean;
   /** 0–1 while spinning; use with `phase === "spinning"` */
   spinProgress: number;
-  spinningContext: SpinningContext | null;
+  spinningContext: ISpinningContext | null;
   handleStartRoulette: () => Promise<void>;
   handleVoteReroll: () => Promise<void>;
 }
@@ -176,7 +176,7 @@ export function useRoulette(
     [locations, activeRun],
   );
 
-  const spinningContext = useMemo((): SpinningContext | null => {
+  const spinningContext = useMemo((): ISpinningContext | null => {
     if (phase !== "spinning" || !activeRun?.sequence_ids?.length) return null;
     const seq = activeRun.sequence_ids;
     const i = tickIndex;
@@ -207,6 +207,7 @@ export function useRoulette(
       setPhase("spinning");
       setTickIndex(0);
     }
+    
   }, [supabase, groupId, onNotice]);
 
   const handleVoteReroll = useCallback(async () => {

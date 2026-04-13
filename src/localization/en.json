@@ -1,4 +1,8 @@
 {
+  "action": {
+    "open": "Open",
+    "copy": "Copy"
+  },
   "common": {
     "app_name": "Lunch/Dinner Picker",
     "loading": "Loading…",

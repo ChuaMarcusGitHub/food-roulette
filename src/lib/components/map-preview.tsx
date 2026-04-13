@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMapEmbedSrc } from "@/lib/utils/map-embed";
-import { isGoogleMapsShortUrl } from "@/lib/utils/map-embed";
+import { getMapEmbedSrc } from "@/lib/utils/google-url-utils";
+import { isGoogleMapsShortUrl } from "@/lib/utils/google-url-utils";
 
 interface MapPreviewProps {
   url: string;

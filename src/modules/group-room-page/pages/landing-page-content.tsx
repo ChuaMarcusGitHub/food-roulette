@@ -1,18 +1,8 @@
 import { useParams } from "react-router-dom";
 import { getSupabase } from "@/lib/supabase/client";
 import { useGroupRoom, useNotice, useRoulette } from "@/lib/hooks";
-import {
-  TabBar,
-  GroupHeader,
-  MemberPasswordForm,
-  UnconfiguredEnv,
-} from "@/lib/components";
-import {
-  GroupNotLoaded,
-  LoadingGroup,
-  MissingGroup,
-  JoinGate,
-} from "../components/ui";
+import { TabBar, GroupHeader, MemberPasswordForm, UnconfiguredEnv } from "@/lib/components";
+import { GroupNotLoaded, LoadingGroup, MissingGroup, JoinGate } from "../components/ui";
 import { GroupTabs } from "../components/tabs";
 
 export const LandingPageContent = () => {
@@ -23,16 +13,6 @@ export const LandingPageContent = () => {
 
   // TODO: Fix this damn hook.
   const room = useGroupRoom(groupId);
-  const roulette = useRoulette(
-    supabase,
-    groupId,
-    room.member?.id,
-    room.members.length,
-    room.locations,
-    postNotice,
-  );
-
-  
 
   if (!room.configured) {
     return <UnconfiguredEnv />;
@@ -51,13 +31,7 @@ export const LandingPageContent = () => {
   }
 
   if (!room.member) {
-    return (
-      <JoinGate
-        group={room.group}
-        busy={room.busy}
-        onJoin={room.handleJoinRoom}
-      />
-    );
+    return <JoinGate group={room.group} busy={room.busy} onJoin={room.handleJoinRoom} />;
   }
 
   if (!room.member.password_set) {
@@ -80,7 +54,7 @@ export const LandingPageContent = () => {
       />
 
       <TabBar active={room.tab} onChange={room.setTab} />
-      <GroupTabs room={room} roulette={roulette} />
+      <GroupTabs room={room} />
     </div>
   );
 };

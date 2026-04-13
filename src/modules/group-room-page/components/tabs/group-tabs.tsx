@@ -15,15 +15,10 @@ const renderMap = {
 
 interface IGroupTabsProps {
   room: IUseGroupRoomReturn;
-  roulette: IUseRouletteReturn;
 }
 
-export const GroupTabs: React.FC<IGroupTabsProps> = ({ room, roulette }) => {
+export const GroupTabs: React.FC<IGroupTabsProps> = ({ room }) => {
   const { tab } = room;
-
-  if (tab === "roulette") {
-    return <RouletteTab room={room} roulette={roulette} />;
-  }
 
   const TabComponent = renderMap[tab];
   return <TabComponent room={room} />;

@@ -5,5 +5,5 @@ export {
   extractGoogleMapsLatLng,
   getMapEmbedSrc,
   derivePlaceNameFromGoogleMapsUrl,
-} from "./map-embed";
+} from "./google-url-utils";
 export { normalizeLocationUrlForDedup } from "./location-url";
